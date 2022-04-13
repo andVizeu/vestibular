@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CandidatoController {
 
-
     @PostMapping
     ResponseEntity<CandidatoResponse> createCandidato(@RequestBody final CreateCandidatoDTO createCandidato) {
         return null;
@@ -46,6 +45,5 @@ public class CandidatoController {
     ResponseEntity<Void> deleteCandidato(@PathVariable final String candidatoId) {
         return null;
     }
-
 
 }
