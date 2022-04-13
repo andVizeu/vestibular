@@ -1,5 +1,7 @@
-springBoot {
-    buildInfo()
+import org.flywaydb.gradle.task.FlywayMigrateTask
+
+plugins {
+    id "org.flywaydb.flyway" version "7.15.0"
 }
 
 bootJar {
@@ -10,8 +12,17 @@ jar {
     enabled = true
 }
 
+flyway {
+    baselineOnMigrate = true
+}
+
+task migrateLocal(type: FlywayMigrateTask) {
+    configFiles = [
+            'src/main/resources/flyway.config'
+    ]
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.6'
-    implementation "org.postgresql:postgresql"
+    implementation 'org.postgresql:postgresql:42.3.3'
 }
