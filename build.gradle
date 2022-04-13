@@ -1,9 +1,12 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.6.4"
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:2.2.1"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.39.0"
     }
 }
 
@@ -11,19 +14,23 @@ plugins {
     id 'java'
 }
 
-repositories {
-    mavenCentral()
-}
-
 allprojects {
     apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
     apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.gorylenko.gradle-git-properties'
+    apply plugin: "com.github.ben-manes.versions"
+    apply plugin: 'project-report'
 
-    group 'br.com.uva.desenvolvimentosoftware.vestibular'
-    version '1.0-SNAPSHOT'
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     bootJar {
@@ -31,6 +38,9 @@ allprojects {
     }
 
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter:2.6.6'
+        implementation "org.springframework.boot:spring-boot-devtools:2.6.6"
+
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     }

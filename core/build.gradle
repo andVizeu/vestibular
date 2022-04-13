@@ -1,13 +1,19 @@
-springBoot {
-    buildInfo()
-}
 
 bootJar {
-    enabled = true
+    enabled = false
 }
 
 jar {
-    enabled = false
+    enabled = true
+}
+
+task testJar(type: Jar) {
+    classifier = 'test'
+    from sourceSets.test.output
+}
+
+artifacts {
+    testRuntimeOnly testJar
 }
 
 dependencies {
