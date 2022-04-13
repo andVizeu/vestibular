@@ -1,0 +1,16 @@
+springBoot {
+    buildInfo()
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':data')
+}

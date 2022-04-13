@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+
+  postgresql:
+    image: postgres:13
+    container_name: postgres-vestibular
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-vestibular:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: vestibular
+      POSTGRES_USER: desenvolvimentosoftware
+      POSTGRES_PASSWORD: desenvolvimentosoftware
+    networks:
+      - private
+
+volumes:
+  postgres-vestibular:
+
+networks:
+  private:
+    external:
+      name: private

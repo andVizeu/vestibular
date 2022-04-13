@@ -1,0 +1,5 @@
+rootProject.name = 'vestibular'
+include 'api'
+include 'core'
+include 'data'
+
