@@ -1,9 +1,9 @@
 package br.com.vestibular.entrypoint.rest.vestibular;
 
-import br.com.vestibular.entrypoint.rest.requests.CreateVestibularDTO;
-import br.com.vestibular.entrypoint.rest.requests.UpdateVestibularDTO;
-import br.com.vestibular.entrypoint.rest.responses.VestibularResponse;
-import br.com.vestibular.entrypoint.rest.responses.VestibularesResponse;
+import br.com.vestibular.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
+import br.com.vestibular.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
+import br.com.vestibular.entrypoint.rest.vestibular.responses.VestibularResponse;
+import br.com.vestibular.entrypoint.rest.vestibular.responses.VestibularesResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
