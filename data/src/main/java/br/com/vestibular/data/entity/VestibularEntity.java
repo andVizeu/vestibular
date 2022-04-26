@@ -7,9 +7,11 @@ import org.hibernate.annotations.GenerationTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,4 +38,10 @@ public class VestibularEntity extends BaseEntity {
             inverseJoinColumns = { @JoinColumn(name = "curso_id") }
     )
     private List<CursoEntity> cursos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<SalaEntity> salas;
+
+    @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CandidatoEntity> candidatos;
 }

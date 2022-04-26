@@ -1,25 +1,23 @@
 package br.com.vestibular.data.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "candidato")
 public class CandidatoEntity extends BaseEntity {
 
-    @Generated(GenerationTime.INSERT)
-    @Column(name = "vestibular_uuid")
-    private UUID vestibularUUID;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "vestibular_id")
+    private VestibularEntity vestibular;
 
     private String nome;
 
