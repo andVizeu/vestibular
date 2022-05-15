@@ -9,7 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -30,5 +32,8 @@ public class SalaEntity extends BaseEntity {
     private String bloco;
 
     private Integer capacidade;
+
+    @OneToMany(mappedBy = "sala")
+    private List<CandidatoEntity> candidatos;
 
 }

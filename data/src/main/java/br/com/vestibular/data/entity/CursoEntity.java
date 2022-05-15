@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenerationTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 import java.util.UUID;
@@ -24,5 +25,8 @@ public class CursoEntity extends BaseEntity {
 
     @ManyToMany(mappedBy = "cursos")
     private List<VestibularEntity> vestibulares;
+
+    @OneToMany(mappedBy = "curso")
+    private List<CandidatoEntity> candidatos;
 
 }
