@@ -4,6 +4,7 @@ import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibula
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularesResponse;
+import br.com.vestibular.core.usecase.vestibular.CreateVestibularUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vestibulares")
 @RequiredArgsConstructor
 public class VestibularController {
+
+    private final CreateVestibularUseCase createVestibular;
+
 
     @PostMapping
     ResponseEntity<VestibularResponse> createVestibular(@RequestBody final CreateVestibularDTO createVestibular) {
