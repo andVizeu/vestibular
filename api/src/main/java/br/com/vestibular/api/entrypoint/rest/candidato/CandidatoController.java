@@ -26,7 +26,7 @@ public class CandidatoController {
     }
 
     @GetMapping
-    ResponseEntity<CandidatosResponse> ListCandidatos() {
+    ResponseEntity<CandidatosResponse> listCandidatos() {
         return null;
     }
 
