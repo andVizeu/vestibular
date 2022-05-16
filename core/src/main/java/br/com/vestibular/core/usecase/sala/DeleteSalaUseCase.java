@@ -1,4 +1,4 @@
-package br.com.vestibular.core.usecase.vestibular;
+package br.com.vestibular.core.usecase.sala;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class DeleteVestibularUseCase {
+public class DeleteSalaUseCase {
 
     public void execute(final Request request) {
 
