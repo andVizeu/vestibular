@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class GetVestibularUseCase {
 
-    public Vestibular execute(final CreateVestibularUseCase.Request request) {
+    public Vestibular execute(final Request request) {
         return null;
     }
 

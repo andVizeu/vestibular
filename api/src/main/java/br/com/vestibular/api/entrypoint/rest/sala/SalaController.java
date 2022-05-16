@@ -4,6 +4,7 @@ import br.com.vestibular.api.entrypoint.rest.sala.requests.CreateSalaDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.requests.UpdateSalaDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalaResponse;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalasResponse;
+import br.com.vestibular.core.usecase.sala.CreateSalaUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,13 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SalaController {
 
+    private final CreateSalaUseCase createSala;
+
+
     @PostMapping
     ResponseEntity<SalaResponse> createSala(@RequestBody final CreateSalaDTO createSala) {
         return null;
     }
 
     @GetMapping
-    ResponseEntity<SalasResponse> ListSalas() {
+    ResponseEntity<SalasResponse> listSalas() {
         return null;
     }
 
@@ -37,7 +41,7 @@ public class SalaController {
 
     @PatchMapping("/salaId")
     ResponseEntity<SalaResponse> updateSala(@PathVariable final Long salaId,
-                                                      @RequestBody final UpdateSalaDTO updateSala) {
+                                            @RequestBody final UpdateSalaDTO updateSala) {
         return null;
     }
 

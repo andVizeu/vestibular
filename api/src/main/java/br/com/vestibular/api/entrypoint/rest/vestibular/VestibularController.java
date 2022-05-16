@@ -5,8 +5,10 @@ import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibula
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularesResponse;
 import br.com.vestibular.core.usecase.vestibular.CreateVestibularUseCase;
+import br.com.vestibular.core.usecase.vestibular.DeleteVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.GetVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.ListVestibularUseCase;
+import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +28,8 @@ public class VestibularController {
     private final CreateVestibularUseCase createVestibular;
     private final ListVestibularUseCase listVestibular;
     private final GetVestibularUseCase getVestibular;
+    private final UpdateVestibularUseCase updateVestibular;
+    private final DeleteVestibularUseCase deleteVestibular;
 
 
     @PostMapping

@@ -8,14 +8,12 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Slf4j
 @Component
 @AllArgsConstructor
-public class ListVestibularUseCase {
+public class DeleteVestibularUseCase {
 
-    public List<Vestibular> execute(final Request request) {
+    public Vestibular execute(final Request request) {
         return null;
     }
 
