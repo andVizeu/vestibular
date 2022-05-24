@@ -33,6 +33,8 @@ public abstract class BusinessException extends RuntimeException {
 
         UNKNOWN_EXCEPTION(4000, "An unknown exception was thrown."),
 
+        INVALID_UUID_FORMAT(4001, "Invalid uuid format"),
+
         INTERNAL_SERVER_ERROR_EXCEPTION(5000, "An internal server error was thrown.");
 
         private long code;

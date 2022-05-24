@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Slf4j
 @Component
 @AllArgsConstructor
@@ -22,7 +24,7 @@ public class GetVestibularUseCase {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request {
-
+        private UUID vestibularUUID;
     }
 
 }
