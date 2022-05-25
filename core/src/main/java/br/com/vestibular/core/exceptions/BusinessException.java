@@ -35,6 +35,8 @@ public abstract class BusinessException extends RuntimeException {
 
         INVALID_UUID_FORMAT(4001, "Invalid uuid format"),
 
+        VESTIBULAR_NOT_FOUND_EXCEPTION(4002, "Vestibular not found"),
+
         INTERNAL_SERVER_ERROR_EXCEPTION(5000, "An internal server error was thrown.");
 
         private long code;

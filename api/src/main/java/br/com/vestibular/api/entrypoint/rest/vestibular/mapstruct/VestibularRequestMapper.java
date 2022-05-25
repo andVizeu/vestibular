@@ -6,13 +6,11 @@ import br.com.vestibular.core.usecase.vestibular.CreateVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
 import org.mapstruct.Mapper;
 
-import java.util.UUID;
-
 @Mapper(componentModel = "spring")
 public interface VestibularRequestMapper {
 
     CreateVestibularUseCase.Request toRequest(final CreateVestibularDTO createVestibular);
 
-    UpdateVestibularUseCase.Request toRequest(final UpdateVestibularDTO updateVestibularDTO, final UUID vestibularUUID);
+    UpdateVestibularUseCase.Request toRequest(final UpdateVestibularDTO updateVestibularDTO, final String vestibularUUID);
 
 }

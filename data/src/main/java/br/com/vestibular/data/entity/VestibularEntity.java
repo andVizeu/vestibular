@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +36,7 @@ public class VestibularEntity extends BaseEntity {
             joinColumns = { @JoinColumn(name = "vestibular_id") },
             inverseJoinColumns = { @JoinColumn(name = "curso_id") }
     )
-    private List<CursoEntity> cursos = new ArrayList<>();
+    private List<CursoEntity> cursos;
 
     @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SalaEntity> salas;

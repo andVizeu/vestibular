@@ -12,7 +12,6 @@ import br.com.vestibular.core.usecase.vestibular.DeleteVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.GetVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.ListVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
-import br.com.vestibular.core.utils.UuidConverterHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -66,8 +64,7 @@ public class VestibularController {
     @GetMapping("/{vestibularUUID}")
     ResponseEntity<VestibularResponse> getVestibular(@PathVariable final String vestibularUUID) {
         log.info("[VestibularController] Recebendo Get vestibular: {}", vestibularUUID);
-        final UUID uuid = UuidConverterHelper.convertToUUId(vestibularUUID);
-        final GetVestibularUseCase.Request request = new GetVestibularUseCase.Request(uuid);
+        final GetVestibularUseCase.Request request = new GetVestibularUseCase.Request(vestibularUUID);
         final Vestibular vestibular = getVestibular.execute(request);
         log.info("[VestibularController] Retorno Get vestibular: {}", vestibular);
         return ResponseEntity.ok(responseMapper.toResponse(vestibular));
@@ -77,8 +74,7 @@ public class VestibularController {
     ResponseEntity<VestibularResponse> updateVestibular(@PathVariable final String vestibularUUID,
                                                         @RequestBody final UpdateVestibularDTO updateVestibularDTO) {
         log.info("[VestibularController] Recebendo Update vestibular --> vestibularUUID: {}, DTO: {}", vestibularUUID, updateVestibularDTO);
-        final UUID uuid = UuidConverterHelper.convertToUUId(vestibularUUID);
-        final UpdateVestibularUseCase.Request request = requestMapper.toRequest(updateVestibularDTO, uuid);
+        final UpdateVestibularUseCase.Request request = requestMapper.toRequest(updateVestibularDTO, vestibularUUID);
         final Vestibular vestibular = updateVestibular.execute(request);
         log.info("[VestibularController] Retorno Update vestibular: {}", vestibular);
         return ResponseEntity.ok(responseMapper.toResponse(vestibular));
@@ -87,8 +83,7 @@ public class VestibularController {
     @DeleteMapping("/{vestibularUUID}")
     ResponseEntity<Void> deleteVestibular(@PathVariable final String vestibularUUID) {
         log.info("[VestibularController] Recebendo Delete vestibular: {}", vestibularUUID);
-        final UUID uuid = UuidConverterHelper.convertToUUId(vestibularUUID);
-        final DeleteVestibularUseCase.Request request = new DeleteVestibularUseCase.Request(uuid);
+        final DeleteVestibularUseCase.Request request = new DeleteVestibularUseCase.Request(vestibularUUID);
         deleteVestibular.execute(request);
         log.info("[VestibularController] Vestibular deletado");
         return ResponseEntity.ok().build();

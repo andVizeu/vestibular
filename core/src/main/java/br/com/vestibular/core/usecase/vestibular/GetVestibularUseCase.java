@@ -1,6 +1,9 @@
 package br.com.vestibular.core.usecase.vestibular;
 
 import br.com.vestibular.core.domain.Vestibular;
+import br.com.vestibular.core.exceptions.VestibularNotFoundException;
+import br.com.vestibular.core.gateway.VestibularGateway;
+import br.com.vestibular.core.utils.UuidConverterHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +18,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class GetVestibularUseCase {
 
+    private final VestibularGateway gateway;
+
     public Vestibular execute(final Request request) {
-        return null;
+
+        final UUID uuid = UuidConverterHelper.convertToUUId(request.vestibularUUID);
+        if (!gateway.existsVestibular(uuid)) {
+            throw new VestibularNotFoundException(request.vestibularUUID);
+        }
+
+        return gateway.getVestibular(uuid);
     }
 
     @Setter
@@ -24,7 +35,7 @@ public class GetVestibularUseCase {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request {
-        private UUID vestibularUUID;
+        private String vestibularUUID;
     }
 
 }
