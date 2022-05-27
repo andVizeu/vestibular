@@ -45,7 +45,7 @@ public class VestibularController {
 
     @PostMapping
     ResponseEntity<VestibularResponse> createVestibular(@RequestBody final CreateVestibularDTO createVestibularDTO) {
-        log.info("[VestibularController] Create DTO para criar vestibular: {}", createVestibularDTO);
+        log.info("[VestibularController] Recebendo Create vestibular: {}", createVestibularDTO);
         final CreateVestibularUseCase.Request request =  requestMapper.toRequest(createVestibularDTO);
         final Vestibular vestibular = createVestibular.execute(request);
         log.info("[VestibularController] Retorno create vestibular: {}", vestibular);

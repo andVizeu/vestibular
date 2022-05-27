@@ -20,7 +20,7 @@ public class CreateCursoUseCase {
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        private String nome;
     }
 
 }

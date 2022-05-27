@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Slf4j
 @Component
 @AllArgsConstructor
@@ -20,7 +22,8 @@ public class UpdateCursoUseCase {
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        private String nome;
+        private UUID cursoUUID;
     }
 
 }

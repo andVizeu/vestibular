@@ -19,7 +19,7 @@ public class DeleteCursoUseCase {
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        private String cursoUUID;
     }
 
 }

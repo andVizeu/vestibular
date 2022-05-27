@@ -20,7 +20,7 @@ public class GetCursoUseCase {
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        final String cursoUUID;
     }
 
 }

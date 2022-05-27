@@ -2,8 +2,6 @@ package br.com.vestibular.core.usecase.curso;
 
 import br.com.vestibular.core.domain.Curso;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ListCursoUseCase {
 
-    public List<Curso> execute(final Request request) {
+    public List<Curso> execute() {
         return null;
-    }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    public static class Request {
-
     }
 
 }
