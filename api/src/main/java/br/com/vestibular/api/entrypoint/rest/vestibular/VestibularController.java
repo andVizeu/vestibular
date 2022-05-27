@@ -1,11 +1,11 @@
 package br.com.vestibular.api.entrypoint.rest.vestibular;
 
-import br.com.vestibular.api.entrypoint.rest.vestibular.mapstruct.VestibularRequestMapper;
-import br.com.vestibular.api.entrypoint.rest.vestibular.mapstruct.VestibularResponseMapper;
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularesResponse;
+import br.com.vestibular.api.mapstruct.RequestMapper;
+import br.com.vestibular.api.mapstruct.ResponseMapper;
 import br.com.vestibular.core.domain.Vestibular;
 import br.com.vestibular.core.usecase.vestibular.CreateVestibularUseCase;
 import br.com.vestibular.core.usecase.vestibular.DeleteVestibularUseCase;
@@ -39,8 +39,8 @@ public class VestibularController {
     private final GetVestibularUseCase getVestibular;
     private final UpdateVestibularUseCase updateVestibular;
     private final DeleteVestibularUseCase deleteVestibular;
-    private final VestibularRequestMapper requestMapper = Mappers.getMapper(VestibularRequestMapper.class);
-    private final VestibularResponseMapper responseMapper = Mappers.getMapper(VestibularResponseMapper.class);
+    private final RequestMapper requestMapper = Mappers.getMapper(RequestMapper.class);
+    private final ResponseMapper responseMapper = Mappers.getMapper(ResponseMapper.class);
 
 
     @PostMapping

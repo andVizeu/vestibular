@@ -1,10 +1,10 @@
-package br.com.vestibular.api.entrypoint.rest.vestibular.mapstruct;
+package br.com.vestibular.api.mapstruct;
 
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import br.com.vestibular.core.domain.Vestibular;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface VestibularResponseMapper {
-    VestibularResponse toResponse(final Vestibular vestibular);
+public interface ResponseMapper {
+    VestibularResponse toResponse(Vestibular vestibular);
 }

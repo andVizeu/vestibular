@@ -1,5 +1,7 @@
 package br.com.vestibular.data.entity;
 
+import br.com.vestibular.core.domain.Vestibular;
+import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
 import lombok.Data;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -43,4 +45,10 @@ public class VestibularEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CandidatoEntity> candidatos;
+
+
+    public void update(Vestibular vestibular) {
+        this.dataInicio = vestibular.getDataInicio();
+        this.dataFim = vestibular.getDataFim();
+    }
 }

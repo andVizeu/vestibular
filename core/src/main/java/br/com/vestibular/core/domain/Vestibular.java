@@ -1,6 +1,7 @@
 package br.com.vestibular.core.domain;
 
 import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class Vestibular {
 
     private UUID vestibularUUID;

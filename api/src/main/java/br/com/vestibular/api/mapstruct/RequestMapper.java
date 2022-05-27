@@ -1,4 +1,4 @@
-package br.com.vestibular.api.entrypoint.rest.vestibular.mapstruct;
+package br.com.vestibular.api.mapstruct;
 
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
@@ -7,10 +7,9 @@ import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface VestibularRequestMapper {
+public interface RequestMapper {
+    CreateVestibularUseCase.Request toRequest(CreateVestibularDTO createVestibularDTO);
 
-    CreateVestibularUseCase.Request toRequest(final CreateVestibularDTO createVestibular);
-
-    UpdateVestibularUseCase.Request toRequest(final UpdateVestibularDTO updateVestibularDTO, final String vestibularUUID);
+    UpdateVestibularUseCase.Request toRequest(UpdateVestibularDTO updateVestibularDTO, String vestibularUUID);
 
 }
