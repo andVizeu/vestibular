@@ -19,6 +19,6 @@ public interface RequestMapper {
 
     CreateCursoUseCase.Request toRequest(CreateCursoDTO createCursoDTO, String vestibularUUID);
 
-    UpdateCursoUseCase.Request toRequest(UpdateCursoDTO updateCursoDTO, String cursoUUID);
+    UpdateCursoUseCase.Request toRequest(UpdateCursoDTO updateCursoDTO, String vestibularUUID, String cursoUUID);
 
 }

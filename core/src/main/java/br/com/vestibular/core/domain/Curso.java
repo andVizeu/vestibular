@@ -1,5 +1,6 @@
 package br.com.vestibular.core.domain;
 
+import br.com.vestibular.core.usecase.curso.UpdateCursoUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -25,6 +26,10 @@ public class Curso {
 
     public static Curso of(final String nome) {
         return new Curso(nome);
+    }
+
+    public void update(final UpdateCursoUseCase.Request request) {
+        this.nome = request.getNome();
     }
 
 }
