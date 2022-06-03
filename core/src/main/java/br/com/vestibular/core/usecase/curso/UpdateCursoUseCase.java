@@ -23,7 +23,7 @@ public class UpdateCursoUseCase {
     @AllArgsConstructor
     public static class Request {
         private String nome;
-        private UUID cursoUUID;
+        private String cursoUUID;
     }
 
 }

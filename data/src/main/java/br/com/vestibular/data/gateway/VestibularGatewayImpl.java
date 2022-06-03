@@ -44,7 +44,7 @@ public class VestibularGatewayImpl implements VestibularGateway {
 
     @Override
     public Vestibular getVestibular(final UUID vestibularUUID) {
-        final Optional<VestibularEntity> optional = repository.findByUUID(vestibularUUID);
+        final Optional<VestibularEntity> optional = repository.findByVestibularUUID(vestibularUUID);
 
         return optional.map(vestibularEntity -> {
             log.info("[VestibularGatewayImpl] Get vestibular from DB: {}", vestibularEntity);
@@ -54,7 +54,7 @@ public class VestibularGatewayImpl implements VestibularGateway {
 
     @Override
     public Vestibular updateVestibular(final Vestibular vestibular) {
-        final Optional<VestibularEntity> optional = repository.findByUUID(vestibular.getVestibularUUID());
+        final Optional<VestibularEntity> optional = repository.findByVestibularUUID(vestibular.getVestibularUUID());
 
         return optional.map(vestibularEntity -> {
             vestibularEntity.update(vestibular);
@@ -66,7 +66,7 @@ public class VestibularGatewayImpl implements VestibularGateway {
 
     @Override
     public void deleteVestibular(final UUID vestibularUUID) {
-        final Optional<VestibularEntity> optional = repository.findByUUID(vestibularUUID);
+        final Optional<VestibularEntity> optional = repository.findByVestibularUUID(vestibularUUID);
 
         if (optional.isPresent()) {
             repository.delete(optional.get());

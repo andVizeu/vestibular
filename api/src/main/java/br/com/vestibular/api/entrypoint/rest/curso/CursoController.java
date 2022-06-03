@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/cursos")
+@RequestMapping("/vestibulares")
 @RequiredArgsConstructor
 public class CursoController {
 
@@ -43,17 +43,18 @@ public class CursoController {
     private final ResponseMapper responseMapper = Mappers.getMapper(ResponseMapper.class);
 
 
-    @PostMapping
-    ResponseEntity<CursoResponse> createCurso(@RequestBody final CreateCursoDTO createCursoDTO) {
+    @PostMapping("/{vestibularUUID}/cursos")
+    ResponseEntity<CursoResponse> createCurso(@PathVariable String vestibularUUID,
+                                              @RequestBody final CreateCursoDTO createCursoDTO) {
         log.info("[CursoController] Recebendo create curso: {}", createCursoDTO);
-        final CreateCursoUseCase.Request request = requestMapper.toRequest(createCursoDTO);
+        final CreateCursoUseCase.Request request = requestMapper.toRequest(createCursoDTO, vestibularUUID);
         final Curso curso = createCurso.execute(request);
         log.info("[CursoController] Retorno create curso: {}", curso);
         return ResponseEntity.ok(responseMapper.toResponse(curso));
     }
 
-    @GetMapping
-    ResponseEntity<CursosResponse> listCurso() {
+    @GetMapping("/{vestibularUUID}/cursos")
+    ResponseEntity<CursosResponse> listCurso(@PathVariable String vestibularUUID) {
         log.info("[CursoController] Recebendo list curso");
         final List<Curso> cursos = listCurso.execute();
         final List<CursoResponse> response = cursos.stream().map(responseMapper::toResponse).collect(Collectors.toList());
@@ -61,27 +62,29 @@ public class CursoController {
         return ResponseEntity.ok(new CursosResponse(response));
     }
 
-    @GetMapping("/{cursoUUID}")
-    ResponseEntity<CursoResponse> getCurso(@PathVariable final String cursoUUID) {
+    @GetMapping("/{vestibularUUID}/cursos/{cursoUUID}")
+    ResponseEntity<CursoResponse> getCurso(@PathVariable String vestibularUUID, @PathVariable final String cursoUUID) {
         log.info("[CursoController] Recebendo get curso: {}", cursoUUID);
-        final GetCursoUseCase.Request request = new GetCursoUseCase.Request(cursoUUID);
+        final GetCursoUseCase.Request request = new GetCursoUseCase.Request(vestibularUUID, cursoUUID);
         final Curso curso = getCurso.execute(request);
         log.info("[CursoController] Retorno get curso: {}", curso);
         return ResponseEntity.ok(responseMapper.toResponse(curso));
     }
 
-    @PatchMapping("/{cursoUUID}")
-    ResponseEntity<CursoResponse> updateCurso(@PathVariable final String cursoUUID,
+    @PatchMapping("/{vestibularUUID}/cursos/{cursoUUID}")
+    ResponseEntity<CursoResponse> updateCurso(@PathVariable String vestibularUUID,
+                                              @PathVariable final String cursoUUID,
                                               @RequestBody final UpdateCursoDTO updateCursoDTO) {
         log.info("[VestibularController] Recebendo Update curso --> cursoUUID: {}, DTO: {}", cursoUUID, updateCursoDTO);
-        final UpdateCursoUseCase.Request request = requestMapper.toRequest(cursoUUID, updateCursoDTO);
+        final UpdateCursoUseCase.Request request = requestMapper.toRequest(updateCursoDTO, cursoUUID);
         final Curso curso = updateCurso.execute(request);
         log.info("[CursoController] Retorno update curso: {}", curso);
         return ResponseEntity.ok(responseMapper.toResponse(curso));
     }
 
-    @DeleteMapping("/{cursoUUID}")
-    ResponseEntity<Void> deleteCurso(@PathVariable final String cursoUUID) {
+    @DeleteMapping("/{vestibularUUID}/cursos/{cursoUUID}")
+    ResponseEntity<Void> deleteCurso(@PathVariable String vestibularUUID,
+                                     @PathVariable final String cursoUUID) {
         log.info("[CursoController] Recebendo delete curso: {}", cursoUUID);
         final DeleteCursoUseCase.Request request = new DeleteCursoUseCase.Request(cursoUUID);
         deleteCurso.execute(request);

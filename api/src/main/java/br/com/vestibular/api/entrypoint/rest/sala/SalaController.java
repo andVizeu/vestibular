@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/salas")
+@RequestMapping("/vestibulares")
 @RequiredArgsConstructor
 public class SalaController {
 
@@ -32,29 +32,33 @@ public class SalaController {
     private final UpdateSalaUseCase updateSala;
 
 
-    @PostMapping
-    ResponseEntity<SalaResponse> createSala(@RequestBody final CreateSalaDTO createSala) {
+    @PostMapping("/{vestibularUUID}/salas")
+    ResponseEntity<SalaResponse> createSala(@PathVariable String vestibularUUID,
+                                            @RequestBody final CreateSalaDTO createSala) {
         return null;
     }
 
-    @GetMapping
-    ResponseEntity<SalasResponse> listSalas() {
+    @GetMapping("/{vestibularUUID}/salas")
+    ResponseEntity<SalasResponse> listSalas(@PathVariable String vestibularUUID) {
         return null;
     }
 
-    @GetMapping("/salaId")
-    ResponseEntity<SalaResponse> getSala(@PathVariable final Long salaId) {
+    @GetMapping("/{vestibularUUID}/salas/{salaId}")
+    ResponseEntity<SalaResponse> getSala(@PathVariable String vestibularUUID,
+                                         @PathVariable final Long salaId) {
         return null;
     }
 
-    @PatchMapping("/salaId")
-    ResponseEntity<SalaResponse> updateSala(@PathVariable final Long salaId,
+    @PatchMapping("/{vestibularUUID}/salas/{salaId}")
+    ResponseEntity<SalaResponse> updateSala(@PathVariable String vestibularUUID,
+                                            @PathVariable final Long salaId,
                                             @RequestBody final UpdateSalaDTO updateSala) {
         return null;
     }
 
-    @DeleteMapping("/salaId")
-    ResponseEntity<Void> deleteSala(@PathVariable final String salaId) {
+    @DeleteMapping("/{vestibularUUID}/salas/{salaId}")
+    ResponseEntity<Void> deleteSala(@PathVariable String vestibularUUID,
+                                    @PathVariable final String salaId) {
         return null;
     }
 

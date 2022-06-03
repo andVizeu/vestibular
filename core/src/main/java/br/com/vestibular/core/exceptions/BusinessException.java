@@ -37,6 +37,8 @@ public abstract class BusinessException extends RuntimeException {
 
         VESTIBULAR_NOT_FOUND_EXCEPTION(4002, "Vestibular not found"),
 
+        CURSO_NOT_FOUND_EXCEPTION(4003, "Curso not found"),
+
         INTERNAL_SERVER_ERROR_EXCEPTION(5000, "An internal server error was thrown.");
 
         private long code;

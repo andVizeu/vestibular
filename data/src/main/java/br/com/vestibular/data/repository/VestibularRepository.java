@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface VestibularRepository extends JpaRepository<VestibularEntity, Long> {
 
-    Optional<VestibularEntity> findByUUID(UUID vestibularUUID);
+    Optional<VestibularEntity> findByVestibularUUID(UUID vestibularUUID);
 
     boolean existsByVestibularUUID(UUID vestibularUUID);
 

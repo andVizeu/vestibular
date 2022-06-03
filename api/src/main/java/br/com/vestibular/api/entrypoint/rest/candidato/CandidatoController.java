@@ -16,33 +16,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/candidatos")
+@RequestMapping("/vestibulares")
 @RequiredArgsConstructor
 public class CandidatoController {
 
-    @PostMapping
-    ResponseEntity<CandidatoResponse> createCandidato(@RequestBody final CreateCandidatoDTO createCandidato) {
+    @PostMapping("/{vestibularUUID}/candidatos")
+    ResponseEntity<CandidatoResponse> createCandidato(@PathVariable String vestibularUUID,
+                                                      @RequestBody final CreateCandidatoDTO createCandidato) {
         return null;
     }
 
-    @GetMapping
-    ResponseEntity<CandidatosResponse> listCandidatos() {
+    @GetMapping("/{vestibularUUID}/candidatos")
+    ResponseEntity<CandidatosResponse> listCandidatos(@PathVariable String vestibularUUID) {
         return null;
     }
 
-    @GetMapping("/candidatoId")
-    ResponseEntity<CandidatoResponse> getCandidato(@PathVariable final Long candidatoId) {
+    @GetMapping("/{vestibularUUID}/candidatos/{candidatoId}")
+    ResponseEntity<CandidatoResponse> getCandidato(@PathVariable String vestibularUUID,
+                                                   @PathVariable final Long candidatoId) {
         return null;
     }
 
-    @PatchMapping("/candidatoId")
-    ResponseEntity<CandidatoResponse> updateCandidato(@PathVariable final Long candidatoId,
+    @PatchMapping("/{vestibularUUID}/candidatos/{candidatoId}")
+    ResponseEntity<CandidatoResponse> updateCandidato(@PathVariable String vestibularUUID,
+                                                      @PathVariable final Long candidatoId,
                                                       @RequestBody final UpdateCandidatoDTO updateCandidato) {
         return null;
     }
 
-    @DeleteMapping("/candidatoId")
-    ResponseEntity<Void> deleteCandidato(@PathVariable final String candidatoId) {
+    @DeleteMapping("/{vestibularUUID}/candidatos/{candidatoId}")
+    ResponseEntity<Void> deleteCandidato(@PathVariable String vestibularUUID,
+                                         @PathVariable final String candidatoId) {
         return null;
     }
 
