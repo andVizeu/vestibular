@@ -56,7 +56,8 @@ public class CursoController {
     @GetMapping("/{vestibularUUID}/cursos")
     ResponseEntity<CursosResponse> listCurso(@PathVariable String vestibularUUID) {
         log.info("[CursoController] Recebendo list curso");
-        final List<Curso> cursos = listCurso.execute();
+        final ListCursoUseCase.Request request = new ListCursoUseCase.Request(vestibularUUID);
+        final List<Curso> cursos = listCurso.execute(request);
         final List<CursoResponse> response = cursos.stream().map(responseMapper::toResponse).collect(Collectors.toList());
         log.info("[CursoController] Retorno list cursos: {}", response);
         return ResponseEntity.ok(new CursosResponse(response));

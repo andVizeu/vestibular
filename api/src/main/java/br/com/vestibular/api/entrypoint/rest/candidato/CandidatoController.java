@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,14 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CandidatoController {
 
-    @PostMapping("/{vestibularUUID}/candidatos")
+    @PostMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos")
     ResponseEntity<CandidatoResponse> createCandidato(@PathVariable String vestibularUUID,
+                                                      @PathVariable String cursoUUID,
                                                       @RequestBody final CreateCandidatoDTO createCandidato) {
         return null;
     }
 
     @GetMapping("/{vestibularUUID}/candidatos")
-    ResponseEntity<CandidatosResponse> listCandidatos(@PathVariable String vestibularUUID) {
+    ResponseEntity<CandidatosResponse> listCandidatos(@PathVariable String vestibularUUID,
+                                                      @RequestParam(required = false) String cursoUUID) {
         return null;
     }
 
@@ -37,15 +40,17 @@ public class CandidatoController {
         return null;
     }
 
-    @PatchMapping("/{vestibularUUID}/candidatos/{candidatoId}")
+    @PatchMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos/{candidatoId}")
     ResponseEntity<CandidatoResponse> updateCandidato(@PathVariable String vestibularUUID,
+                                                      @PathVariable String cursoUUID,
                                                       @PathVariable final Long candidatoId,
                                                       @RequestBody final UpdateCandidatoDTO updateCandidato) {
         return null;
     }
 
-    @DeleteMapping("/{vestibularUUID}/candidatos/{candidatoId}")
+    @DeleteMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos/{candidatoId}")
     ResponseEntity<Void> deleteCandidato(@PathVariable String vestibularUUID,
+                                         @PathVariable String cursoUUID,
                                          @PathVariable final String candidatoId) {
         return null;
     }
