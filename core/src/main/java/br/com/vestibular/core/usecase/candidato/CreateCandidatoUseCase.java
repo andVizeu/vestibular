@@ -1,6 +1,12 @@
 package br.com.vestibular.core.usecase.candidato;
 
-import br.com.vestibular.core.domain.Curso;
+import br.com.vestibular.core.domain.Candidato;
+import br.com.vestibular.core.exceptions.CursoNotFoundExeption;
+import br.com.vestibular.core.exceptions.VestibularNotFoundException;
+import br.com.vestibular.core.gateway.CandidatoGateway;
+import br.com.vestibular.core.gateway.CursoGateway;
+import br.com.vestibular.core.gateway.VestibularGateway;
+import br.com.vestibular.core.utils.UuidConverterHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,15 +18,34 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class CreateCandidatoUseCase {
 
-    public Curso execute(final Request request) {
-        return null;
+    private final CandidatoGateway candidatoGateway;
+    private final VestibularGateway vestibularGateway;
+    private final CursoGateway cursoGateway;
+
+    public Candidato execute(final Request request) execute(final Request request) {
+
+        final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
+        if (!vestibularGateway.existsVestibular(vestibularUUID)) {
+            throw new VestibularNotFoundException(request.vestibularUUID);
+        }
+
+        final UUID cursoUUID = UuidConverterHelper.convertToUUId(request.cursoUUID);
+        if (!cursoGateway.existsVestibular(cursoUUID)) {
+            throw new CursoNotFoundException(request.cursoUUID);
+        }
+
+        return candidatoGateway.addCandidato(Candidato.of(request.nome, request.cpf, request.dataNascimento), vestibularUUID, cursoUUID);
     }
 
     @Setter
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        private String vestibularUUID;
+        private String cursoUUID;
+        private String nome;
+        private LocalDateTime dataNascimento;
+        private String cpf;
     }
 
 }

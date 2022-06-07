@@ -1,6 +1,10 @@
 package br.com.vestibular.core.usecase.candidato;
 
-import br.com.vestibular.core.domain.Curso;
+import br.com.vestibular.core.domain.Candidato;
+import br.com.vestibular.core.exceptions.VestibularNotFoundException;
+import br.com.vestibular.core.gateway.CandidatoGateway;
+import br.com.vestibular.core.gateway.VestibularGateway;
+import br.com.vestibular.core.utils.UuidConverterHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,15 +16,25 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class GetCandidatoUseCase {
 
-    public Curso execute(final Request request) {
-        return null;
+    private final CandidatoGateway candidatoGateway;
+    private final VestibularGateway vestibularGateway;
+
+    public Candidato execute(final Request request) {
+
+        final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
+        if (!vestibularGateway.existsVestibular(vestibularUUID)) {
+            throw new VestibularNotFoundException(request.vestibularUUID);
+        }
+
+        return candidatoGateway.getCandidato(request.candidatoId);
     }
 
     @Setter
     @Getter
     @AllArgsConstructor
     public static class Request {
-
+        final String vestibularUUID;
+        final Long candidatoId;
     }
 
 }

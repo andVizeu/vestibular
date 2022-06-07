@@ -1,6 +1,7 @@
 package br.com.vestibular.core.usecase.candidato;
 
-import br.com.vestibular.core.domain.Curso;
+import br.com.vestibular.core.domain.Candidato;
+import br.com.vestibular.core.gateway.CandidatoGateway;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,15 +13,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class ListCandidatosUseCase {
 
-    public Curso execute(final Request request) {
-        return null;
+    private final CandidatoGateway candidatoGateway;
+
+    public List<Candidato> execute() {
+        return candidatoGateway.listCandidato();
     }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    public static class Request {
-
-    }
-
 }
