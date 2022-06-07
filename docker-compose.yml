@@ -12,8 +12,6 @@ services:
       POSTGRES_DB: vestibular
       POSTGRES_USER: desenvolvimentosoftware
       POSTGRES_PASSWORD: desenvolvimentosoftware
-    networks:
-      - private
 
 volumes:
   postgres-vestibular:
