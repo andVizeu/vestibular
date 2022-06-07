@@ -38,7 +38,7 @@ public class VestibularGatewayImpl implements VestibularGateway {
     @Override
     public List<Vestibular> listVestibular() {
         final List<VestibularEntity> entities = repository.findAll();
-        log.info("[VestibularGatewayImpl] Number of vestibular recovered from the bank: {}", entities.size());
+        log.info("[VestibularGatewayImpl] Number of vestibular recovered from the DB: {}", entities.size());
         return entities.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
     }
 

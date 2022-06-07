@@ -34,7 +34,7 @@ public class GetCursoUseCase {
             throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
-        return cursoGateway.getCurso(cursoUUID, vestibularUUID);
+        return cursoGateway.getCurso(cursoUUID);
     }
 
     @Setter

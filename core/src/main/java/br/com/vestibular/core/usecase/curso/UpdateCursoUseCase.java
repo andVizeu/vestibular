@@ -32,13 +32,13 @@ public class UpdateCursoUseCase {
         }
 
         final UUID cursoUUID = UuidConverterHelper.convertToUUId(request.cursoUUID);
-        final Curso curso = cursoGateway.getCurso(cursoUUID, vestibularUUID);
+        final Curso curso = cursoGateway.getCurso(cursoUUID);
         if (isNull(curso)) {
             throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
         curso.update(request);
-        return cursoGateway.updateCurso(curso, vestibularUUID);
+        return cursoGateway.updateCurso(curso);
     }
 
     @Setter

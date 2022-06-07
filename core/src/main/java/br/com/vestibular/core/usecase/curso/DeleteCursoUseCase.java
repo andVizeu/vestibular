@@ -33,7 +33,7 @@ public class DeleteCursoUseCase {
             throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
-        cursoGateway.deleteCurso(vestibularUUID, cursoUUID);
+        cursoGateway.deleteCurso(cursoUUID);
     }
 
     @Setter
