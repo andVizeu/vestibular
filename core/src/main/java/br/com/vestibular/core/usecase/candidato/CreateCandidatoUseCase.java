@@ -13,6 +13,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Slf4j
 @Component
 @AllArgsConstructor
@@ -22,7 +25,7 @@ public class CreateCandidatoUseCase {
     private final VestibularGateway vestibularGateway;
     private final CursoGateway cursoGateway;
 
-    public Candidato execute(final Request request) execute(final Request request) {
+    public Candidato execute(final Request request) {
 
         final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!vestibularGateway.existsVestibular(vestibularUUID)) {
@@ -30,11 +33,11 @@ public class CreateCandidatoUseCase {
         }
 
         final UUID cursoUUID = UuidConverterHelper.convertToUUId(request.cursoUUID);
-        if (!cursoGateway.existsVestibular(cursoUUID)) {
-            throw new CursoNotFoundException(request.cursoUUID);
+        if (!cursoGateway.existsCurso(cursoUUID)) {
+            throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
-        return candidatoGateway.addCandidato(Candidato.of(request.nome, request.cpf, request.dataNascimento), vestibularUUID, cursoUUID);
+        return candidatoGateway.addCandidato(Candidato.of(request.nome, request.dataNascimento, request.cpf));
     }
 
     @Setter

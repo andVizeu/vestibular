@@ -1,7 +1,6 @@
 package br.com.vestibular.data.entity;
 
 import br.com.vestibular.core.domain.Vestibular;
-import br.com.vestibular.core.usecase.vestibular.UpdateVestibularUseCase;
 import lombok.Data;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;

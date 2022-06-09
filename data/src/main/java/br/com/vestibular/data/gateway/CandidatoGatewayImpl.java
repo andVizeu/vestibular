@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -43,8 +42,8 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
     }
 
     @Override
-    public Candidato getCandidato(final UUID candidatoUUID) {
-        final Optional<CandidatoEntity> optional = repository.findByCandidatoUUID(candidatoUUID);
+    public Candidato getCandidato(final Long candidatoId) {
+        final Optional<CandidatoEntity> optional = repository.findById(candidatoId);
 
         return optional.map(candidatoEntity -> {
             log.info("[CandidatoGatewayImpl] Get candidato from DB: {}", candidatoEntity);
@@ -54,28 +53,32 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
 
     @Override
     public Candidato updateCandidato(final Candidato candidato) {
-        final Optional<CandidatoEntity> optional = repository.findByCandidatoUUID(candidato.getCandidatoUUID());
+        final Optional<CandidatoEntity> optional = repository.findById(candidato.getId());
 
         return optional.map(candidatoEntity -> {
-            candidatoEntity.update(candidato);
-            final CandidatoEntity savedEntity = repository.save(candidatoEntity);
+            final CandidatoEntity savedEntity = repository.save(update(candidato, candidatoEntity));
             log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedEntity);
             return toDomainMapper.toDomain(savedEntity);
         }).orElse(null);
     }
 
     @Override
-    public void deleteCandidato(final UUID candidatoUUID) {
-        final Optional<CandidatoEntity> optional = repository.findByCandidatoUUID(candidatoUUID);
-
-        if (optional.isPresent()) {
-            repository.delete(optional.get());
-            log.info("[CandidatoGatewayImpl] Deleted vestibular in DB: {}", candidatoUUID);
-        }
+    public void deleteCandidato(final Long candidatoId) {
+        final Optional<CandidatoEntity> optional = repository.findById(candidatoId);
+        optional.ifPresent(repository::delete);
+        log.info("[CandidatoGatewayImpl] Deleted candidato in DB: {}", candidatoId);
     }
 
     @Override
-    public boolean existsCandidato(final UUID candidatoUUID) {
-        return repository.existsByCandidatoUUID(candidatoUUID);
+    public boolean existsCandidato(final Long candidatoId) {
+        return repository.existsById(candidatoId);
     }
+
+    private CandidatoEntity update(final Candidato candidato, final CandidatoEntity candidatoEntity) {
+        candidatoEntity.setNome(candidato.getNome());
+        candidatoEntity.setDataNascimento(candidato.getDataNascimento());
+        candidatoEntity.setCpf(candidato.getCpf());
+        return candidatoEntity;
+    }
+
 }

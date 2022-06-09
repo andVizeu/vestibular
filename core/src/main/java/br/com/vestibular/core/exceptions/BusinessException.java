@@ -41,6 +41,8 @@ public abstract class BusinessException extends RuntimeException {
 
         SALA_NOT_FOUND_EXCEPTION(4003, "Sala not found"),
 
+        CANDIDATO_NOT_FOUND_EXCEPTION(4004, "Candidato not foud"),
+
         INTERNAL_SERVER_ERROR_EXCEPTION(5000, "An internal server error was thrown.");
 
         private long code;

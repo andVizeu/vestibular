@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CandidatoRepository extends JpaRepository<CandidatoEntity, Long> {
 
+    boolean existsById(Long id);
+
 }

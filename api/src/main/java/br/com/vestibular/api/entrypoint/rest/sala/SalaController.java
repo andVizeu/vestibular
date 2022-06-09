@@ -1,16 +1,13 @@
 package br.com.vestibular.api.entrypoint.rest.sala;
 
 
-
 import br.com.vestibular.api.entrypoint.rest.sala.requests.CreateSalaDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.requests.UpdateSalaDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalaResponse;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalasResponse;
-
-import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.api.mapstruct.RequestMapper;
 import br.com.vestibular.api.mapstruct.ResponseMapper;
-import br.com.vestibular.core.usecase.curso.DeleteCursoUseCase;
+import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.core.usecase.sala.CreateSalaUseCase;
 import br.com.vestibular.core.usecase.sala.DeleteSalaUseCase;
 import br.com.vestibular.core.usecase.sala.GetSalaUseCase;

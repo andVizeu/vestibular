@@ -1,6 +1,5 @@
 package br.com.vestibular.api.entrypoint.rest.sala.responses;
 
-import br.com.vestibular.api.entrypoint.rest.curso.responses.CursoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

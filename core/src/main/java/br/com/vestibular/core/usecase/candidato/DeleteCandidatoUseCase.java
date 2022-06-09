@@ -1,6 +1,5 @@
 package br.com.vestibular.core.usecase.candidato;
 
-import br.com.vestibular.core.domain.Candidato;
 import br.com.vestibular.core.exceptions.CursoNotFoundExeption;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
 import br.com.vestibular.core.gateway.CandidatoGateway;
@@ -12,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -34,7 +35,7 @@ public class DeleteCandidatoUseCase {
             throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
-        return candidatoGateway.deleteCandidato(request.candidatoId);
+        candidatoGateway.deleteCandidato(request.candidatoId);
     }
 
     @Setter
@@ -43,7 +44,7 @@ public class DeleteCandidatoUseCase {
     public static class Request {
         final String vestibularUUID;
         final String cursoUUID;
-        final String candidatoId
+        final Long candidatoId;
     }
 
 }

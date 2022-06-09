@@ -1,6 +1,5 @@
 package br.com.vestibular.core.domain;
 
-import br.com.vestibular.core.usecase.curso.UpdateCursoUseCase;
 import br.com.vestibular.core.usecase.sala.UpdateSalaUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Data;

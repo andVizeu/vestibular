@@ -1,6 +1,5 @@
 package br.com.vestibular.data.repository;
 
-import br.com.vestibular.core.domain.Vestibular;
 import br.com.vestibular.data.entity.CursoEntity;
 import br.com.vestibular.data.entity.VestibularEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

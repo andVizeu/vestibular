@@ -1,12 +1,9 @@
 package br.com.vestibular.core.usecase.sala;
 
-import br.com.vestibular.core.exceptions.CursoNotFoundExeption;
 import br.com.vestibular.core.exceptions.SalaNotFoundExeption;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
-import br.com.vestibular.core.gateway.CursoGateway;
 import br.com.vestibular.core.gateway.SalaGateway;
 import br.com.vestibular.core.gateway.VestibularGateway;
-import br.com.vestibular.core.usecase.curso.DeleteCursoUseCase;
 import br.com.vestibular.core.utils.UuidConverterHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
