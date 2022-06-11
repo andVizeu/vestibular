@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:data.properties")
+@PropertySource("classpath:data-${spring.profiles.active}.properties")
 public @interface BasePropertySource {
 }
