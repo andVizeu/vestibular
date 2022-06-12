@@ -66,4 +66,5 @@ class VestibularIntegrationTests {
         assertEquals(vestibulares.getVestibulares().size(), 1);
     }
 
+
 }
