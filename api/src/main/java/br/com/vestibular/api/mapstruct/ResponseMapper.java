@@ -1,8 +1,10 @@
 package br.com.vestibular.api.mapstruct;
 
+import br.com.vestibular.api.entrypoint.rest.candidato.responses.CandidatoResponse;
 import br.com.vestibular.api.entrypoint.rest.curso.responses.CursoResponse;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalaResponse;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
+import br.com.vestibular.core.domain.Candidato;
 import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.core.domain.Vestibular;
@@ -16,4 +18,6 @@ public interface ResponseMapper {
     CursoResponse toResponse(Curso curso);
 
     SalaResponse toResponse(Sala sala);
+
+    CandidatoResponse toResponse(Candidato candidato);
 }
