@@ -10,6 +10,7 @@ bootJar {
 
 jar {
     enabled = true
+
 }
 
 flyway {
@@ -20,6 +21,15 @@ task migrateLocal(type: FlywayMigrateTask) {
     configFiles = [
             'src/main/resources/flyway.config'
     ]
+}
+
+task testJar(type: Jar) {
+    classifier = 'test'
+    from sourceSets.test.output
+}
+
+artifacts {
+    testRuntimeOnly testJar
 }
 
 dependencies {

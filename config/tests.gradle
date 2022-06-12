@@ -1,0 +1,16 @@
+test {
+    useJUnitPlatform()
+    failFast = true
+}
+
+task unitTest(type: Test) {
+    include '**/*Test.*'
+}
+
+task integrationTest(type: Test) {
+    include '**/*IT.*'
+}
+
+task contractTest(type: Test) {
+    include '**/*CT.*'
+}

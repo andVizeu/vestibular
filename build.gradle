@@ -24,6 +24,8 @@ allprojects {
     apply plugin: "com.github.ben-manes.versions"
     apply plugin: 'project-report'
 
+    apply from: "${rootProject.rootDir}/config/tests.gradle"
+
     group = 'com.example'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '11'
@@ -42,13 +44,13 @@ allprojects {
         implementation 'org.springframework.boot:spring-boot-devtools:2.6.7'
 
         implementation 'org.projectlombok:lombok:1.18.24'
-        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
         implementation "org.mapstruct:mapstruct:1.4.2.Final"
         annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
 
+        testImplementation "org.springframework.boot:spring-boot-starter-test:2.6.7"
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     }
 
 }
@@ -57,8 +59,4 @@ dependencies {
     implementation project(':api')
     implementation project(':core')
     implementation project(':data')
-}
-
-test {
-    useJUnitPlatform()
 }
