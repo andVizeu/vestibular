@@ -1,14 +1,14 @@
-package br.com.vestibular.it.vestibular;
+package br.com.vestibular.integrationtests.vestibular;
 
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
-import br.com.vestibular.it.config.IntegrationTest;
+import br.com.vestibular.integrationtests.config.IntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static br.com.vestibular.it.CreateDtoUtils.createVestibularDto;
+import static br.com.vestibular.integrationtests.CreateDtoUtils.createVestibularDto;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
