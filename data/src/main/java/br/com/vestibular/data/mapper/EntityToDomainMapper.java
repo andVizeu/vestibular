@@ -7,10 +7,14 @@ import br.com.vestibular.data.entity.CandidatoEntity;
 import br.com.vestibular.data.entity.CursoEntity;
 import br.com.vestibular.data.entity.VestibularEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EntityToDomainMapper {
 
+    @Mapping(target = "cursos", ignore = true)
+    @Mapping(target = "salas", ignore = true)
+    @Mapping(target = "candidatos", ignore = true)
     Vestibular toDomain(VestibularEntity entity);
 
     Curso toDomain(CursoEntity entity);

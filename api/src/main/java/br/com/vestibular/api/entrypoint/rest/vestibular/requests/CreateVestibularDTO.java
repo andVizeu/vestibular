@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class CreateVestibularDTO {
+
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
+
 }

@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@SpringBootTest
 @ActiveProfiles("integrationtest")
 @AutoConfigureMockMvc
 @Retention(RetentionPolicy.RUNTIME)
