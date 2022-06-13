@@ -1,4 +1,4 @@
-package br.com.vestibular.it;
+package br.com.vestibular.integrationtests;
 
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
 

@@ -8,9 +8,5 @@ task unitTest(type: Test) {
 }
 
 task integrationTest(type: Test) {
-    include '**/*IT.*'
-}
-
-task contractTest(type: Test) {
-    include '**/*CT.*'
+    include '**/*integrationtests.*'
 }
