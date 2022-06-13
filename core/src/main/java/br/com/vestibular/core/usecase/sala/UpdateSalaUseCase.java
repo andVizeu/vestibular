@@ -32,13 +32,13 @@ public class UpdateSalaUseCase {
     }
 
     final UUID salaUUID = UuidConverterHelper.convertToUUId(request.salaUUID);
-    final Sala sala = salaGateway.getSala(salaUUID, vestibularUUID);
+    final Sala sala = salaGateway.getSala(salaUUID);
         if (isNull(sala)) {
         throw new SalaNotFoundExeption(request.salaUUID);
     }
 
         sala.update(request);
-        return salaGateway.updateSala(sala, vestibularUUID);
+        return salaGateway.updateSala(sala);
 }
 
 @Setter

@@ -33,7 +33,7 @@ public class DeleteSalaUseCase {
             throw new SalaNotFoundExeption(request.salaUUID);
         }
 
-        salaGateway.deleteSala(vestibularUUID, salaUUID);
+        salaGateway.deleteSala(salaUUID);
     }
 
     @Setter

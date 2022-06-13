@@ -34,7 +34,7 @@ public class GetSalaUseCase {
             throw new SalaNotFoundExeption(request.salaUUID);
         }
 
-        return salaGateway.getSala(salaUUID, vestibularUUID);
+        return salaGateway.getSala(salaUUID);
     }
 
     @Setter
