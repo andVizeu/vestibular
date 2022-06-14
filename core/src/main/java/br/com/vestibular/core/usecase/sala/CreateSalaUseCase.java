@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -22,14 +23,14 @@ public class CreateSalaUseCase {
     private final VestibularGateway vestibularGateway;
     private final SalaGateway salaGateway;
 
-    public Sala execute(final CreateSalaUseCase.Request request) {
+    public List<Sala> execute(final CreateSalaUseCase.Request request) {
 
         final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!vestibularGateway.existsVestibular(vestibularUUID)) {
             throw new VestibularNotFoundException(request.vestibularUUID);
         }
 
-        return salaGateway.addSala(Sala.of(request.nome), vestibularUUID);
+        return salaGateway.addSala(Sala.of(request), vestibularUUID);
     }
 
     @Setter
@@ -37,7 +38,9 @@ public class CreateSalaUseCase {
     @AllArgsConstructor
     public static class Request {
         private String vestibularUUID;
-        private String nome;
+        private String identificador;
+        private String bloco;
+        private Integer capacidade;
     }
 
 }

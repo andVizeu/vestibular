@@ -46,13 +46,14 @@ public class SalaController {
 
 
     @PostMapping("/{vestibularUUID}/salas")
-    ResponseEntity<SalaResponse> createSala(@PathVariable String vestibularUUID,
+    ResponseEntity<SalasResponse> createSala(@PathVariable String vestibularUUID,
                                             @RequestBody final CreateSalaDTO createSalaDTO) {
         log.info("[SalaController] Recebendo create sala: {}", createSalaDTO);
         final CreateSalaUseCase.Request request = requestMapper.toRequest(createSalaDTO, vestibularUUID);
-        final Sala sala = createSala.execute(request);
-        log.info("[SalaoController] Retorno create sala: {}", sala);
-        return ResponseEntity.ok(responseMapper.toResponse(sala));
+        final List<Sala> salas = createSala.execute(request);
+        final List<SalaResponse> response = salas.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        log.info("[SalaoController] Retorno create sala: {}", response.size());
+        return ResponseEntity.ok(new SalasResponse(response));
     }
 
     @GetMapping("/{vestibularUUID}/salas")
@@ -87,13 +88,14 @@ public class SalaController {
     }
 
     @DeleteMapping("/{vestibularUUID}/salas/{salaId}")
-    ResponseEntity<Void> deleteSala(@PathVariable String vestibularUUID,
+    ResponseEntity<SalasResponse> deleteSala(@PathVariable String vestibularUUID,
                                     @PathVariable  Long salaId) {
         log.info("[SalaController] Recebendo delete sala: {}", salaId);
         final DeleteSalaUseCase.Request request = new DeleteSalaUseCase.Request(vestibularUUID, salaId);
-        deleteSala.execute(request);
-        log.info("[SalaController] Sala deletado");
-        return ResponseEntity.ok().build();
+        final List<Sala> salas = deleteSala.execute(request);
+        final List<SalaResponse> response = salas.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        log.info("[SalaController] Retorno list deletado: {}", response.size());
+        return ResponseEntity.ok(new SalasResponse(response));
     }
 
 }

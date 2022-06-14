@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class SalaResponse {
 
     private VestibularResponse vestibular;
 
-    private UUID salaUUID;
+    private Long id;
 
     private String identificador;
 

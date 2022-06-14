@@ -45,6 +45,8 @@ public class UpdateSalaUseCase {
 @AllArgsConstructor
 public static class Request {
     private String identificador;
+    private String bloco;
+    private Integer capacidade;
     private String vestibularUUID;
     private Long salaId;
 }

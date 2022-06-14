@@ -2,34 +2,25 @@ package br.com.vestibular.integrationtests;
 
 import br.com.vestibular.api.entrypoint.rest.curso.requests.CreateCursoDTO;
 import br.com.vestibular.api.entrypoint.rest.curso.requests.UpdateCursoDTO;
-import br.com.vestibular.api.entrypoint.rest.curso.responses.CursoResponse;
 import br.com.vestibular.api.entrypoint.rest.curso.responses.CursosResponse;
-import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
-import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.domain.Vestibular;
 import br.com.vestibular.core.gateway.CursoGateway;
 import br.com.vestibular.core.gateway.VestibularGateway;
-import br.com.vestibular.data.repository.VestibularRepository;
 import br.com.vestibular.integrationtests.config.IntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.List;
-
 import static br.com.vestibular.integrationtests.CreateDtoUtils.createCursoDTO;
 import static br.com.vestibular.integrationtests.CreateDtoUtils.updateCursoDTO;
-import static br.com.vestibular.integrationtests.CreateDtoUtils.updateVestibularDTO;
 import static br.com.vestibular.integrationtests.CreateEntityUtils.createCurso;
 import static br.com.vestibular.integrationtests.CreateEntityUtils.createVestibular;
 import static java.util.Objects.nonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -49,9 +40,6 @@ class CursoIntegrationTest {
 
     @Autowired
     private CursoGateway cursoGateway;
-
-    @Autowired
-    private VestibularRepository repository;
 
     @Autowired
     private ObjectMapper objectMapper;

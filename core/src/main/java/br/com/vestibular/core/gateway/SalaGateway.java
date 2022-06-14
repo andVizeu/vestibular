@@ -1,7 +1,6 @@
 package br.com.vestibular.core.gateway;
 
 
-import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.domain.Sala;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 public interface SalaGateway {
 
-    Sala addSala(Sala sala, UUID vestibularUUID);
+    List<Sala> addSala(Sala sala, UUID vestibularUUID);
 
     List<Sala> listSalas(UUID vestibularUUID);
 
@@ -17,7 +16,7 @@ public interface SalaGateway {
 
     Sala updateSala(Sala sala);
 
-    void deleteSala(Long salaId);
+    List<Sala> deleteSala(UUID vestibularUUID, Long salaId);
 
     boolean existsSala(Long salaId);
 }

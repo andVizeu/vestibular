@@ -1,5 +1,6 @@
 package br.com.vestibular.core.usecase.sala;
 
+import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.core.exceptions.SalaNotFoundExeption;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
 import br.com.vestibular.core.gateway.SalaGateway;
@@ -11,6 +12,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -21,7 +23,7 @@ public class DeleteSalaUseCase {
     private final VestibularGateway vestibularGateway;
     private final SalaGateway salaGateway;
 
-    public void execute(final DeleteSalaUseCase.Request request) {
+    public List<Sala> execute(final DeleteSalaUseCase.Request request) {
 
         final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!vestibularGateway.existsVestibular(vestibularUUID)) {
@@ -32,7 +34,7 @@ public class DeleteSalaUseCase {
             throw new SalaNotFoundExeption(request.salaId);
         }
 
-        salaGateway.deleteSala(request.salaId);
+        return salaGateway.deleteSala(vestibularUUID, request.salaId);
     }
 
     @Setter

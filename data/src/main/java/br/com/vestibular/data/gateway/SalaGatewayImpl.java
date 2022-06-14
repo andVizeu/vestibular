@@ -3,11 +3,10 @@ package br.com.vestibular.data.gateway;
 
 import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.core.gateway.SalaGateway;
-
 import br.com.vestibular.data.entity.SalaEntity;
+import br.com.vestibular.data.entity.VestibularEntity;
 import br.com.vestibular.data.mapper.DomainToEntityMapper;
 import br.com.vestibular.data.mapper.EntityToDomainMapper;
-
 import br.com.vestibular.data.repository.SalaRepository;
 import br.com.vestibular.data.repository.VestibularRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +30,15 @@ public class SalaGatewayImpl implements SalaGateway {
     private final EntityToDomainMapper toDomainMapper;
 
     @Override
-    public Sala addSala(final Sala sala, final UUID vestibularUUID) {
+    public List<Sala> addSala(final Sala sala, final UUID vestibularUUID) {
         return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
                 vestibularEntity -> {
                     final SalaEntity salaEntity = toEntityMapper.toEntity(sala);
+                    salaEntity.setVestibular(vestibularEntity);
                     vestibularEntity.getSalas().add(salaEntity);
-                    final SalaEntity savedEntity = salaRepository.save(salaEntity);
-                    log.info("[SalaGatewayImpl] Saved sala in DB: {}", savedEntity);
-                    return toDomainMapper.toDomain(savedEntity);
+                    final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
+                    log.info("[SalaGatewayImpl] Saved sala in DB: {}", savedVestibular.getSalas().size());
+                    return savedVestibular.getSalas().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
                 }
         ).orElse(null);
     }
@@ -76,10 +76,16 @@ public class SalaGatewayImpl implements SalaGateway {
     }
 
     @Override
-    public void deleteSala(final Long salaId) {
-        final Optional<SalaEntity> salaEntityOpt = salaRepository.findById(salaId);
-        salaEntityOpt.ifPresent(salaRepository::delete);
-        log.info("[SalaGatewayImpl] Deleted sala in DB: {}", salaId);
+    public List<Sala> deleteSala(final UUID vestibularUUID, final Long salaId) {
+        final Optional<VestibularEntity> vestibularOpt = vestibularRepository.findByVestibularUUID(vestibularUUID);
+        if (vestibularOpt.isPresent()) {
+            final VestibularEntity vestibularEntity = vestibularOpt.get();
+            vestibularEntity.getSalas().removeIf(vestibular -> vestibular.getId().equals(salaId));
+            log.info("[CursoGatewayImpl] Deleted sala in DB: {}", salaId);
+            final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
+            return savedVestibular.getSalas().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Override
@@ -89,6 +95,8 @@ public class SalaGatewayImpl implements SalaGateway {
 
     private SalaEntity updateSala(Sala sala, SalaEntity salaEntity) {
         salaEntity.setIdentificador(sala.getIdentificador());
+        salaEntity.setBloco(sala.getBloco());
+        salaEntity.setCapacidade(sala.getCapacidade());
         return salaEntity;
     }
 
