@@ -1,5 +1,6 @@
 package br.com.vestibular.integrationtests;
 
+import br.com.vestibular.api.entrypoint.rest.candidato.requests.CreateCandidatoDTO;
 import br.com.vestibular.api.entrypoint.rest.curso.requests.CreateCursoDTO;
 import br.com.vestibular.api.entrypoint.rest.curso.requests.UpdateCursoDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.requests.CreateSalaDTO;
@@ -36,6 +37,10 @@ public class CreateDtoUtils {
 
     public static UpdateSalaDTO updateSalaDTO() {
         return new UpdateSalaDTO("B101", "B", 40);
+    }
+
+    public static CreateCandidatoDTO createCandidatoDTO() {
+        return new CreateCandidatoDTO("Candidato", LocalDateTime.now(), "999.999.999-99");
     }
 
 }

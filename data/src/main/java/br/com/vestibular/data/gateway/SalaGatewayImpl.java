@@ -97,6 +97,7 @@ public class SalaGatewayImpl implements SalaGateway {
         salaEntity.setIdentificador(sala.getIdentificador());
         salaEntity.setBloco(sala.getBloco());
         salaEntity.setCapacidade(sala.getCapacidade());
+        salaEntity.setCandidatos(sala.getCandidatos().stream().map(toEntityMapper::toEntity).collect(Collectors.toList()));
         return salaEntity;
     }
 

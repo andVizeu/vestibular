@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS candidato (
     data_nascimento         timestamp NOT NULL,
     cpf                     VARCHAR(25) NOT NULL,
     curso_id                BIGINT NOT NULL,
-    sala_id                 BIGINT NOT NULL,
+    sala_id                 BIGINT,
     created_at              TIMESTAMP NOT NULL DEFAULT now(),
     updated_at              TIMESTAMP NOT NULL DEFAULT now(),
     version                 BIGINT,

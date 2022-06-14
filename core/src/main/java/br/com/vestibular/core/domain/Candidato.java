@@ -1,5 +1,6 @@
 package br.com.vestibular.core.domain;
 
+import br.com.vestibular.core.usecase.candidato.CreateCandidatoUseCase;
 import br.com.vestibular.core.usecase.candidato.UpdateCandidatoUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,8 @@ public class Candidato {
         this.cpf = cpf;
     }
 
-    public static Candidato of(final String nome, final LocalDateTime dataNascimento, final String cpf) {
-        return new Candidato(nome, dataNascimento, cpf);
+    public static Candidato of(final CreateCandidatoUseCase.Request request) {
+        return new Candidato(request.getNome(), request.getDataNascimento(), request.getCpf());
     }
 
     public void update(final UpdateCandidatoUseCase.Request request) {

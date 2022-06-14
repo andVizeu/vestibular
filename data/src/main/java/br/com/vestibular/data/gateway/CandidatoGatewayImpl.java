@@ -3,23 +3,34 @@ package br.com.vestibular.data.gateway;
 import br.com.vestibular.core.domain.Candidato;
 import br.com.vestibular.core.gateway.CandidatoGateway;
 import br.com.vestibular.data.entity.CandidatoEntity;
+import br.com.vestibular.data.entity.CursoEntity;
+import br.com.vestibular.data.entity.VestibularEntity;
 import br.com.vestibular.data.mapper.DomainToEntityMapper;
 import br.com.vestibular.data.mapper.EntityToDomainMapper;
 import br.com.vestibular.data.repository.CandidatoRepository;
+import br.com.vestibular.data.repository.CursoRepository;
+import br.com.vestibular.data.repository.VestibularRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CandidatoGatewayImpl implements CandidatoGateway {
 
-    private final CandidatoRepository repository;
+    private final VestibularRepository vestibularRepository;
+
+    private final CursoRepository cursoRepository;
+    private final CandidatoRepository candidatoRepository;
 
     private final DomainToEntityMapper toEntityMapper;
 
@@ -27,23 +38,46 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
 
 
     @Override
-    public Candidato addCandidato(final Candidato candidato) {
-        final CandidatoEntity entity = toEntityMapper.toEntity(candidato);
-        final CandidatoEntity savedEntity = repository.save(entity);
-        log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedEntity);
-        return toDomainMapper.toDomain(savedEntity);
+    public List<Candidato> addCandidato(final UUID vestibularUUID, final UUID cursoUUID, final Candidato candidato) {
+        return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
+                vestibularEntity -> {
+                    return cursoRepository.findByCursoUUID(cursoUUID).map(cursoEntity -> {
+                        final CandidatoEntity candidatoEntity = toEntityMapper.toEntity(candidato);
+                        candidatoEntity.setVestibular(vestibularEntity);
+                        candidatoEntity.setCurso(cursoEntity);
+                        vestibularEntity.getCandidatos().add(candidatoEntity);
+                        final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
+                        log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedVestibular.getCandidatos().size());
+                        return savedVestibular.getCandidatos().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+                    }).orElse(null);
+                }
+        ).orElse(null);
     }
 
     @Override
-    public List<Candidato> listCandidato() {
-        final List<CandidatoEntity> entities = repository.findAll();
-        log.info("[CandidatoGatewayImpl] Number of candidato recovered from the bank: {}", entities.size());
-        return entities.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+    public List<Candidato> listCandidato(final UUID vestibularUUID, final UUID cursoUUID) {
+        List<CandidatoEntity> candidatoEntitiesList = null;
+
+        final Optional<VestibularEntity> vestibularOpt = vestibularRepository.findByVestibularUUID(vestibularUUID);
+
+        if (vestibularOpt.isPresent()) {
+            if (isNull(cursoUUID)) {
+                candidatoEntitiesList = candidatoRepository.findByVestibular(vestibularOpt.get());
+            } else {
+                final Optional<CursoEntity> cursoOpt = cursoRepository.findByCursoUUID(cursoUUID);
+                candidatoEntitiesList = candidatoRepository.findByVestibularAndCurso(vestibularOpt.get(), cursoOpt.get());
+            }
+        }
+
+        if (nonNull(candidatoEntitiesList)) {
+            return candidatoEntitiesList.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Override
     public Candidato getCandidato(final Long candidatoId) {
-        final Optional<CandidatoEntity> optional = repository.findById(candidatoId);
+        final Optional<CandidatoEntity> optional = candidatoRepository.findById(candidatoId);
 
         return optional.map(candidatoEntity -> {
             log.info("[CandidatoGatewayImpl] Get candidato from DB: {}", candidatoEntity);
@@ -53,10 +87,10 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
 
     @Override
     public Candidato updateCandidato(final Candidato candidato) {
-        final Optional<CandidatoEntity> optional = repository.findById(candidato.getId());
+        final Optional<CandidatoEntity> optional = candidatoRepository.findById(candidato.getId());
 
         return optional.map(candidatoEntity -> {
-            final CandidatoEntity savedEntity = repository.save(update(candidato, candidatoEntity));
+            final CandidatoEntity savedEntity = candidatoRepository.save(update(candidato, candidatoEntity));
             log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedEntity);
             return toDomainMapper.toDomain(savedEntity);
         }).orElse(null);
@@ -64,20 +98,21 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
 
     @Override
     public void deleteCandidato(final Long candidatoId) {
-        final Optional<CandidatoEntity> optional = repository.findById(candidatoId);
-        optional.ifPresent(repository::delete);
+        final Optional<CandidatoEntity> optional = candidatoRepository.findById(candidatoId);
+        optional.ifPresent(candidatoRepository::delete);
         log.info("[CandidatoGatewayImpl] Deleted candidato in DB: {}", candidatoId);
     }
 
     @Override
     public boolean existsCandidato(final Long candidatoId) {
-        return repository.existsById(candidatoId);
+        return candidatoRepository.existsById(candidatoId);
     }
 
     private CandidatoEntity update(final Candidato candidato, final CandidatoEntity candidatoEntity) {
         candidatoEntity.setNome(candidato.getNome());
         candidatoEntity.setDataNascimento(candidato.getDataNascimento());
         candidatoEntity.setCpf(candidato.getCpf());
+        candidatoEntity.setSala(toEntityMapper.toEntity(candidato.getSala()));
         return candidatoEntity;
     }
 

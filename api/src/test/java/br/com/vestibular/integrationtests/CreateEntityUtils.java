@@ -1,5 +1,6 @@
 package br.com.vestibular.integrationtests;
 
+import br.com.vestibular.core.domain.Candidato;
 import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.domain.Sala;
 import br.com.vestibular.core.domain.Vestibular;
@@ -27,6 +28,10 @@ public class CreateEntityUtils {
 
     public static Sala createSala(final Vestibular vestibular) {
         return new Sala(null, vestibular, "A101", "A", 30, null);
+    }
+
+    public static Candidato createCandidato(final Vestibular vestibular, final Curso curso) {
+        return new Candidato(null, vestibular, "Candidato", LocalDateTime.now(), "999.999.999-99", curso, null);
     }
 
 }
