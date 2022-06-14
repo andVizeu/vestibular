@@ -67,9 +67,9 @@ public class SalaController {
 
     @GetMapping("/{vestibularUUID}/salas/{salaId}")
     ResponseEntity<SalaResponse> getSala(@PathVariable String vestibularUUID,
-                                         @PathVariable String salaUUID) {
-        log.info("[SalaController] Recebendo get sala: {}", salaUUID);
-        final GetSalaUseCase.Request request = new GetSalaUseCase.Request(vestibularUUID, salaUUID);
+                                         @PathVariable Long salaId) {
+        log.info("[SalaController] Recebendo get sala: {}", salaId);
+        final GetSalaUseCase.Request request = new GetSalaUseCase.Request(vestibularUUID, salaId);
         final Sala sala = getSala.execute(request);
         log.info("[SalaController] Retorno get sala: {}", sala);
         return ResponseEntity.ok(responseMapper.toResponse(sala));
@@ -77,10 +77,10 @@ public class SalaController {
 
     @PatchMapping("/{vestibularUUID}/salas/{salaId}")
     ResponseEntity<SalaResponse> updateSala(@PathVariable final String vestibularUUID,
-                                              @PathVariable final String salaUUID,
+                                              @PathVariable final Long salaId,
                                               @RequestBody final UpdateSalaDTO updateSalaDTO) {
-        log.info("[VestibularController] Recebendo Update sala --> salaUUID: {}, DTO: {}", salaUUID, updateSalaDTO);
-        final UpdateSalaUseCase.Request request = requestMapper.toRequest(updateSalaDTO, vestibularUUID, salaUUID);
+        log.info("[VestibularController] Recebendo Update sala --> salaUUID: {}, DTO: {}", salaId, updateSalaDTO);
+        final UpdateSalaUseCase.Request request = requestMapper.toRequest(updateSalaDTO, vestibularUUID, salaId);
         final Sala sala = updateSala.execute(request);
         log.info("[SalaController] Retorno update sala: {}", sala);
         return ResponseEntity.ok(responseMapper.toResponse(sala));
@@ -88,9 +88,9 @@ public class SalaController {
 
     @DeleteMapping("/{vestibularUUID}/salas/{salaId}")
     ResponseEntity<Void> deleteSala(@PathVariable String vestibularUUID,
-                                    @PathVariable  String salaUUID) {
-        log.info("[SalaController] Recebendo delete sala: {}", salaUUID);
-        final DeleteSalaUseCase.Request request = new DeleteSalaUseCase.Request(vestibularUUID, salaUUID);
+                                    @PathVariable  Long salaId) {
+        log.info("[SalaController] Recebendo delete sala: {}", salaId);
+        final DeleteSalaUseCase.Request request = new DeleteSalaUseCase.Request(vestibularUUID, salaId);
         deleteSala.execute(request);
         log.info("[SalaController] Sala deletado");
         return ResponseEntity.ok().build();

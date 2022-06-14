@@ -11,9 +11,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Sala {
 
-    private Vestibular vestibular;
+    private Long id;
 
-    private UUID salaUUID;
+    private Vestibular vestibular;
 
     private String identificador;
 

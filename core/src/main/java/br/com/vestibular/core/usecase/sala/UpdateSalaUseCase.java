@@ -31,10 +31,9 @@ public class UpdateSalaUseCase {
         throw new VestibularNotFoundException(request.vestibularUUID);
     }
 
-    final UUID salaUUID = UuidConverterHelper.convertToUUId(request.salaUUID);
-    final Sala sala = salaGateway.getSala(salaUUID);
+    final Sala sala = salaGateway.getSala(request.salaId);
         if (isNull(sala)) {
-        throw new SalaNotFoundExeption(request.salaUUID);
+        throw new SalaNotFoundExeption(request.salaId);
     }
 
         sala.update(request);
@@ -47,7 +46,7 @@ public class UpdateSalaUseCase {
 public static class Request {
     private String identificador;
     private String vestibularUUID;
-    private String salaUUID;
+    private Long salaId;
 }
 
 }

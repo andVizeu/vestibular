@@ -2,16 +2,16 @@ package br.com.vestibular.core.exceptions;
 
 public class SalaNotFoundExeption extends BusinessException {
 
-    private final String salaUUID;
+    private final Long salaId;
 
-    public SalaNotFoundExeption(final String salaUUID) {
+    public SalaNotFoundExeption(final Long salaId) {
         super(Codes.SALA_NOT_FOUND_EXCEPTION);
-        this.salaUUID = salaUUID;
+        this.salaId = salaId;
     }
 
     @Override
     public String getMessage() {
-        return String.format("%s - %s", super.getMessage(), salaUUID);
+        return String.format("%s - %s", super.getMessage(), salaId);
     }
 
 }

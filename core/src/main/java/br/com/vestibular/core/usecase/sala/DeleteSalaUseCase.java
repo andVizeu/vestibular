@@ -28,12 +28,11 @@ public class DeleteSalaUseCase {
             throw new VestibularNotFoundException(request.vestibularUUID);
         }
 
-        final UUID salaUUID = UuidConverterHelper.convertToUUId(request.salaUUID);
-        if (!salaGateway.existsSala(salaUUID)) {
-            throw new SalaNotFoundExeption(request.salaUUID);
+        if (!salaGateway.existsSala(request.salaId)) {
+            throw new SalaNotFoundExeption(request.salaId);
         }
 
-        salaGateway.deleteSala(salaUUID);
+        salaGateway.deleteSala(request.salaId);
     }
 
     @Setter
@@ -41,7 +40,7 @@ public class DeleteSalaUseCase {
     @AllArgsConstructor
     public static class Request {
         private String vestibularUUID;
-        private String salaUUID;
+        private Long salaId;
     }
 
 }

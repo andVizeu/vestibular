@@ -31,7 +31,7 @@ public class SalaGatewayImpl implements SalaGateway {
     private final EntityToDomainMapper toDomainMapper;
 
     @Override
-    public Sala addSala(Sala sala, UUID vestibularUUID) {
+    public Sala addSala(final Sala sala, final UUID vestibularUUID) {
         return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
                 vestibularEntity -> {
                     final SalaEntity salaEntity = toEntityMapper.toEntity(sala);
@@ -44,10 +44,10 @@ public class SalaGatewayImpl implements SalaGateway {
     }
 
     @Override
-    public List<Sala> listSalas(UUID vestibularUUID) {
+    public List<Sala> listSalas(final UUID vestibularUUID) {
         return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
                 vestibularEntity -> {
-                    final List<SalaEntity> salasEntity = salaRepository.findAllByVestibulares(vestibularEntity);
+                    final List<SalaEntity> salasEntity = salaRepository.findAllByVestibular(vestibularEntity);
                     log.info("[SalaGatewayImpl] Number of salas recovered from the DB: {}", salasEntity.size());
                     return salasEntity.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
                 }
@@ -55,8 +55,8 @@ public class SalaGatewayImpl implements SalaGateway {
     }
 
     @Override
-    public Sala getSala(UUID salaUUID) {
-        return salaRepository.findBySalaUUID(salaUUID).map(
+    public Sala getSala(final Long salaId) {
+        return salaRepository.findById(salaId).map(
                 salaEntity -> {
                     log.info("[SalaGatewayImpl] Get sala from DB: {}", salaEntity);
                     return toDomainMapper.toDomain(salaEntity);
@@ -65,8 +65,8 @@ public class SalaGatewayImpl implements SalaGateway {
     }
 
     @Override
-    public Sala updateSala(Sala sala) {
-        return salaRepository.findBySalaUUID(sala.getSalaUUID()).map(
+    public Sala updateSala(final Sala sala) {
+        return salaRepository.findById(sala.getId()).map(
                 salaEntity -> {
                     final SalaEntity saveEntity = salaRepository.save(updateSala(sala, salaEntity));
                     log.info("[SalaGatewayImpl] Saved sala in DB: {}", saveEntity);
@@ -76,15 +76,15 @@ public class SalaGatewayImpl implements SalaGateway {
     }
 
     @Override
-    public void deleteSala(UUID salaUUID) {
-        final Optional<SalaEntity> salaEntityOpt = salaRepository.findBySalaUUID(salaUUID);
+    public void deleteSala(final Long salaId) {
+        final Optional<SalaEntity> salaEntityOpt = salaRepository.findById(salaId);
         salaEntityOpt.ifPresent(salaRepository::delete);
-        log.info("[SalaGatewayImpl] Deleted sala in DB: {}", salaUUID);
+        log.info("[SalaGatewayImpl] Deleted sala in DB: {}", salaId);
     }
 
     @Override
-    public boolean existsSala(UUID salaUUID) {
-        return salaRepository.existsBySalaUUID(salaUUID);
+    public boolean existsSala(final Long salaId) {
+        return salaRepository.existsById(salaId);
     }
 
     private SalaEntity updateSala(Sala sala, SalaEntity salaEntity) {

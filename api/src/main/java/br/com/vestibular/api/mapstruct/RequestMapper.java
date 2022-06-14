@@ -27,6 +27,6 @@ public interface RequestMapper {
 
     CreateSalaUseCase.Request toRequest(CreateSalaDTO createSalaDTO, String vestibularUUID);
 
-    UpdateSalaUseCase.Request toRequest(UpdateSalaDTO updateSalaDTO, String vestibularUUID, String salaUUID);
+    UpdateSalaUseCase.Request toRequest(UpdateSalaDTO updateSalaDTO, String vestibularUUID, Long salaId);
 
 }

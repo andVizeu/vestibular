@@ -12,9 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface SalaRepository extends JpaRepository<SalaEntity, Long> {
-    Optional<SalaEntity> findBySalaUUID(UUID salaUUID);
 
-    List<SalaEntity> findAllByVestibulares(VestibularEntity vestibularEntity);
+    List<SalaEntity> findAllByVestibular(VestibularEntity vestibularEntity);
 
-    boolean existsBySalaUUID(UUID salaUUID);
+    boolean existsById(Long salaId);
 }

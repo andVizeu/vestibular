@@ -29,12 +29,11 @@ public class GetSalaUseCase {
             throw new VestibularNotFoundException(request.vestibularUUID);
         }
 
-        final  UUID salaUUID = UuidConverterHelper.convertToUUId(request.salaUUID);
-        if (!salaGateway.existsSala(salaUUID)) {
-            throw new SalaNotFoundExeption(request.salaUUID);
+        if (!salaGateway.existsSala(request.salaId)) {
+            throw new SalaNotFoundExeption(request.salaId);
         }
 
-        return salaGateway.getSala(salaUUID);
+        return salaGateway.getSala(request.salaId);
     }
 
     @Setter
@@ -42,7 +41,7 @@ public class GetSalaUseCase {
     @AllArgsConstructor
     public static class Request {
         final String vestibularUUID;
-        final String salaUUID;
+        final Long salaId;
     }
 
 }

@@ -13,11 +13,11 @@ public interface SalaGateway {
 
     List<Sala> listSalas(UUID vestibularUUID);
 
-    Sala getSala(UUID salaUUID);
+    Sala getSala(Long salaId);
 
     Sala updateSala(Sala sala);
 
-    void deleteSala(UUID salaUUID);
+    void deleteSala(Long salaId);
 
-    boolean existsSala(UUID salaUUID);
+    boolean existsSala(Long salaId);
 }
