@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CursoGateway {
 
-    Curso addCurso(Curso curso, UUID vestibularUUID);
+    List<Curso> addCurso(Curso curso, UUID vestibularUUID);
 
     List<Curso> listCursos(UUID vestibularUUID);
 
@@ -15,7 +15,7 @@ public interface CursoGateway {
 
     Curso updateCurso(Curso curso);
 
-    void deleteCurso(UUID cursoUUID);
+    List<Curso> deleteCurso(UUID vestibularUUID, UUID cursoUUID);
 
     boolean existsCurso(UUID cursoUUID);
 }

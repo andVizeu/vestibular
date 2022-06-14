@@ -1,7 +1,9 @@
 package br.com.vestibular.data.entity;
 
 import br.com.vestibular.core.domain.Vestibular;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -22,6 +24,8 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "vestibular")
+@AllArgsConstructor
+@NoArgsConstructor
 public class VestibularEntity extends BaseEntity {
 
     @Generated(GenerationTime.INSERT)
@@ -38,15 +42,12 @@ public class VestibularEntity extends BaseEntity {
             joinColumns = { @JoinColumn(name = "vestibular_id") },
             inverseJoinColumns = { @JoinColumn(name = "curso_id") }
     )
-    @ToString.Exclude
     private List<CursoEntity> cursos;
 
     @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ToString.Exclude
     private List<SalaEntity> salas;
 
     @OneToMany(mappedBy = "vestibular", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ToString.Exclude
     private List<CandidatoEntity> candidatos;
 
 

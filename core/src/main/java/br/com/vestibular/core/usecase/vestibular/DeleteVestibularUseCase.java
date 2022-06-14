@@ -1,5 +1,6 @@
 package br.com.vestibular.core.usecase.vestibular;
 
+import br.com.vestibular.core.domain.Vestibular;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
 import br.com.vestibular.core.gateway.VestibularGateway;
 import br.com.vestibular.core.utils.UuidConverterHelper;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -19,14 +21,14 @@ public class DeleteVestibularUseCase {
 
     private final VestibularGateway gateway;
 
-    public void execute(final Request request) {
+    public List<Vestibular> execute(final Request request) {
 
         final UUID uuid = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!gateway.existsVestibular(uuid)) {
             throw new VestibularNotFoundException(request.vestibularUUID);
         }
 
-        gateway.deleteVestibular(uuid);
+        return gateway.deleteVestibular(uuid);
     }
 
     @Setter

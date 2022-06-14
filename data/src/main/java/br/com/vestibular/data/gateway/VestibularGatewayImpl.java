@@ -65,13 +65,14 @@ public class VestibularGatewayImpl implements VestibularGateway {
     }
 
     @Override
-    public void deleteVestibular(final UUID vestibularUUID) {
+    public List<Vestibular> deleteVestibular(final UUID vestibularUUID) {
         final Optional<VestibularEntity> optional = repository.findByVestibularUUID(vestibularUUID);
-
         if (optional.isPresent()) {
             repository.delete(optional.get());
             log.info("[VestibularGatewayImpl] Deleted vestibular in DB: {}", vestibularUUID);
         }
+        final List<VestibularEntity> entities = repository.findAll();
+        return entities.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
     }
 
     @Override

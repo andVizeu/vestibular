@@ -81,12 +81,13 @@ public class VestibularController {
     }
 
     @DeleteMapping("/{vestibularUUID}")
-    ResponseEntity<Void> deleteVestibular(@PathVariable final String vestibularUUID) {
+    ResponseEntity<VestibularesResponse> deleteVestibular(@PathVariable final String vestibularUUID) {
         log.info("[VestibularController] Recebendo Delete vestibular: {}", vestibularUUID);
         final DeleteVestibularUseCase.Request request = new DeleteVestibularUseCase.Request(vestibularUUID);
-        deleteVestibular.execute(request);
+        final List<Vestibular> vestibulares = deleteVestibular.execute(request);
         log.info("[VestibularController] Vestibular deletado");
-        return ResponseEntity.ok().build();
+        final List<VestibularResponse> response = vestibulares.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(new VestibularesResponse(response));
     }
 
 }

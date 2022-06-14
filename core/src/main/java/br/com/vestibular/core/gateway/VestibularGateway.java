@@ -15,7 +15,7 @@ public interface VestibularGateway {
 
     Vestibular updateVestibular(Vestibular vestibular);
 
-    void deleteVestibular(UUID vestibularUUID);
+    List<Vestibular> deleteVestibular(UUID vestibularUUID);
 
     boolean existsVestibular(UUID vestibularUUID);
 

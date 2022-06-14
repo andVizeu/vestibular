@@ -14,9 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static br.com.vestibular.integrationtests.CreateDtoUtils.createVestibularDto;
+import static br.com.vestibular.integrationtests.CreateDtoUtils.createVestibularDTO;
 import static br.com.vestibular.integrationtests.CreateDtoUtils.updateVestibularDTO;
-import static br.com.vestibular.integrationtests.config.CreateEntityUtils.createVestibular;
+import static br.com.vestibular.integrationtests.CreateEntityUtils.createVestibular;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -41,9 +42,9 @@ class VestibularIntegrationTests {
 
     @Test
     void shouldCreateVestibularTest() throws Exception {
-        final CreateVestibularDTO dto = createVestibularDto();
+        final CreateVestibularDTO dto = createVestibularDTO();
 
-        final ResultActions result = mvc.perform(post("/vestibulares")
+        mvc.perform(post("/vestibulares")
                 .content(objectMapper.writeValueAsString(dto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -53,9 +54,6 @@ class VestibularIntegrationTests {
                 .andExpect(jsonPath("$.cursos").isEmpty())
                 .andExpect(jsonPath("$.salas").isEmpty())
                 .andExpect(jsonPath("$.candidatos").isEmpty());
-
-        final String content = result.andReturn().getResponse().getContentAsString();
-        final VestibularResponse response = objectMapper.readValue(content, VestibularResponse.class);
     }
 
     @Test
@@ -105,9 +103,7 @@ class VestibularIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vestibularUUID").isNotEmpty())
                 .andExpect(jsonPath("$.dataInicio").isNotEmpty())
-                .andExpect(jsonPath("$.dataInicio").value(dto.getDataInicio().toString()))
                 .andExpect(jsonPath("$.dataFim").isNotEmpty())
-                .andExpect(jsonPath("$.dataFim").value(dto.getDataFim().toString()))
                 .andExpect(jsonPath("$.cursos").isEmpty())
                 .andExpect(jsonPath("$.salas").isEmpty())
                 .andExpect(jsonPath("$.candidatos").isEmpty());
@@ -123,10 +119,16 @@ class VestibularIntegrationTests {
         final Vestibular vestibular = createVestibular();
         final  Vestibular savedVestibular = gateway.addVestibular(vestibular);
 
-        mvc.perform(delete("/vestibulares/{vestibularUUID}",
+        final ResultActions result = mvc.perform(delete("/vestibulares/{vestibularUUID}",
                         savedVestibular.getVestibularUUID())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        final String content = result.andReturn().getResponse().getContentAsString();
+        final VestibularesResponse vestibulares = objectMapper.readValue(content, VestibularesResponse.class);
+
+        assertFalse(vestibulares.getVestibulares().stream().anyMatch(vestibularEntity ->
+                vestibularEntity.getVestibularUUID().equals(savedVestibular.getVestibularUUID())));
     }
 
 }

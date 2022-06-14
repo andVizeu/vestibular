@@ -44,13 +44,14 @@ public class CursoController {
 
 
     @PostMapping("/{vestibularUUID}/cursos")
-    ResponseEntity<CursoResponse> createCurso(@PathVariable final String vestibularUUID,
+    ResponseEntity<CursosResponse> createCurso(@PathVariable final String vestibularUUID,
                                               @RequestBody final CreateCursoDTO createCursoDTO) {
         log.info("[CursoController] Recebendo create curso: {}", createCursoDTO);
         final CreateCursoUseCase.Request request = requestMapper.toRequest(createCursoDTO, vestibularUUID);
-        final Curso curso = createCurso.execute(request);
-        log.info("[CursoController] Retorno create curso: {}", curso);
-        return ResponseEntity.ok(responseMapper.toResponse(curso));
+        final List<Curso> cursos = createCurso.execute(request);
+        final List<CursoResponse> response = cursos.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        log.info("[CursoController] Retorno create curso: {}", response);
+        return ResponseEntity.ok(new CursosResponse(response));
     }
 
     @GetMapping("/{vestibularUUID}/cursos")
@@ -85,13 +86,14 @@ public class CursoController {
     }
 
     @DeleteMapping("/{vestibularUUID}/cursos/{cursoUUID}")
-    ResponseEntity<Void> deleteCurso(@PathVariable final String vestibularUUID,
+    ResponseEntity<CursosResponse> deleteCurso(@PathVariable final String vestibularUUID,
                                      @PathVariable final String cursoUUID) {
         log.info("[CursoController] Recebendo delete curso: {}", cursoUUID);
         final DeleteCursoUseCase.Request request = new DeleteCursoUseCase.Request(vestibularUUID, cursoUUID);
-        deleteCurso.execute(request);
-        log.info("[CursoController] Curso deletado");
-        return ResponseEntity.ok().build();
+        final List<Curso> cursos = deleteCurso.execute(request);
+        final List<CursoResponse> response = cursos.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        log.info("[CursoController] Retorno delete cursos: {}", response);
+        return ResponseEntity.ok(new CursosResponse(response));
     }
 
 }

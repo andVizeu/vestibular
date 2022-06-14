@@ -1,5 +1,6 @@
 package br.com.vestibular.core.usecase.curso;
 
+import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.exceptions.CursoNotFoundExeption;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
 import br.com.vestibular.core.gateway.CursoGateway;
@@ -11,6 +12,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -21,7 +23,7 @@ public class DeleteCursoUseCase {
     private final VestibularGateway vestibularGateway;
     private final CursoGateway cursoGateway;
 
-    public void execute(final Request request) {
+    public List<Curso> execute(final Request request) {
 
         final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!vestibularGateway.existsVestibular(vestibularUUID)) {
@@ -33,7 +35,7 @@ public class DeleteCursoUseCase {
             throw new CursoNotFoundExeption(request.cursoUUID);
         }
 
-        cursoGateway.deleteCurso(cursoUUID);
+        return cursoGateway.deleteCurso(vestibularUUID, cursoUUID);
     }
 
     @Setter

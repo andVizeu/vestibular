@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class CreateCursoUseCase {
     private final VestibularGateway vestibularGateway;
     private final CursoGateway cursoGateway;
 
-    public Curso execute(final Request request) {
+    public List<Curso> execute(final Request request) {
 
         final UUID vestibularUUID = UuidConverterHelper.convertToUUId(request.vestibularUUID);
         if (!vestibularGateway.existsVestibular(vestibularUUID)) {

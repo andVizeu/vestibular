@@ -19,6 +19,8 @@ public interface EntityToDomainMapper {
     @Mapping(target = "candidatos", ignore = true)
     Vestibular toDomain(VestibularEntity entity);
 
+    @Mapping(target = "vestibulares", ignore = true)
+    @Mapping(target = "candidatos", ignore = true)
     Curso toDomain(CursoEntity entity);
 
     Candidato toDomain(CandidatoEntity entity);

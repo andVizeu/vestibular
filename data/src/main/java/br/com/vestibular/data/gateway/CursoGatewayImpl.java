@@ -3,6 +3,7 @@ package br.com.vestibular.data.gateway;
 import br.com.vestibular.core.domain.Curso;
 import br.com.vestibular.core.gateway.CursoGateway;
 import br.com.vestibular.data.entity.CursoEntity;
+import br.com.vestibular.data.entity.VestibularEntity;
 import br.com.vestibular.data.mapper.DomainToEntityMapper;
 import br.com.vestibular.data.mapper.EntityToDomainMapper;
 import br.com.vestibular.data.repository.CursoRepository;
@@ -27,14 +28,14 @@ public class CursoGatewayImpl implements CursoGateway {
     private final EntityToDomainMapper toDomainMapper;
 
     @Override
-    public Curso addCurso(Curso curso, UUID vestibularUUID) {
+    public List<Curso> addCurso(Curso curso, UUID vestibularUUID) {
         return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
             vestibularEntity -> {
                 final CursoEntity cursoEntity = toEntityMapper.toEntity(curso);
                 vestibularEntity.getCursos().add(cursoEntity);
-                final CursoEntity savedEntity = cursoRepository.save(cursoEntity);
-                log.info("[CursoGatewayImpl] Saved curso in DB: {}", savedEntity);
-                return toDomainMapper.toDomain(savedEntity);
+                final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
+                log.info("[CursoGatewayImpl] Saved curso in DB: {}", savedVestibular.getCursos().size());
+                return savedVestibular.getCursos().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
             }
         ).orElse(null);
     }
@@ -72,10 +73,16 @@ public class CursoGatewayImpl implements CursoGateway {
     }
 
     @Override
-    public void deleteCurso(UUID cursoUUID) {
-        final Optional<CursoEntity> cursoEntityOpt = cursoRepository.findByCursoUUID(cursoUUID);
-        cursoEntityOpt.ifPresent(cursoRepository::delete);
-        log.info("[CursoGatewayImpl] Deleted curso in DB: {}", cursoUUID);
+    public List<Curso> deleteCurso(UUID vestibularUUID, UUID cursoUUID) {
+        final Optional<VestibularEntity> vestibularOpt = vestibularRepository.findByVestibularUUID(vestibularUUID);
+        if (vestibularOpt.isPresent()) {
+            final VestibularEntity vestibularEntity = vestibularOpt.get();
+            vestibularEntity.getCursos().removeIf(vestibular -> vestibular.getCursoUUID().equals(cursoUUID));
+            log.info("[CursoGatewayImpl] Deleted curso in DB: {}", cursoUUID);
+            final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
+            return savedVestibular.getCursos().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Override

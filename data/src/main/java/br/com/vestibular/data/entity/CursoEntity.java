@@ -1,6 +1,7 @@
 package br.com.vestibular.data.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
