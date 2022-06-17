@@ -81,22 +81,34 @@ public class CandidatoController {
     @GetMapping("/{vestibularUUID}/candidatos/{candidatoId}")
     ResponseEntity<CandidatoResponse> getCandidato(@PathVariable final String vestibularUUID,
                                                    @PathVariable final Long candidatoId) {
-        return null;
+        log.info("[CandidatoController] Recebendo get candidato: {}", candidatoId);
+        final GetCandidatoUseCase.Request request = new GetCandidatoUseCase.Request(vestibularUUID, candidatoId);
+        final Candidato candidato = getCandidato.execute(request);
+        log.info("[CandidatoController] Retorno get candidato: {}", candidato);
+        return ResponseEntity.ok(responseMapper.toResponse(candidato));
     }
 
     @PatchMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos/{candidatoId}")
     ResponseEntity<CandidatoResponse> updateCandidato(@PathVariable final String vestibularUUID,
                                                       @PathVariable final String cursoUUID,
                                                       @PathVariable final Long candidatoId,
-                                                      @RequestBody final UpdateCandidatoDTO updateCandidato) {
-        return null;
+                                                      @RequestBody final UpdateCandidatoDTO updateCandidatoDTO) {
+        log.info("[CandidatoController] Recebendo Update candidato --> candidatoId: {}, dto: {}", candidatoId, updateCandidatoDTO);
+        final UpdateCandidatoUseCase.Request request = requestMapper.toRequest(vestibularUUID, cursoUUID, candidatoId, updateCandidatoDTO);
+        final Candidato candidato = updateCandidato.execute(request);
+        log.info("[CandidatoController] Retorno update candidato: {}", candidato);
+        return ResponseEntity.ok(responseMapper.toResponse(candidato));
     }
 
     @DeleteMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos/{candidatoId}")
     ResponseEntity<Void> deleteCandidato(@PathVariable final String vestibularUUID,
                                          @PathVariable final String cursoUUID,
                                          @PathVariable final Long candidatoId) {
-        return null;
+        log.info("[CandidatoController] Recebendo delete candidato: {}", candidatoId);
+        final DeleteCandidatoUseCase.Request request = new DeleteCandidatoUseCase.Request(vestibularUUID, cursoUUID, candidatoId);
+        deleteCandidato.execute(request);
+        log.info("[CandidatoController] Candidato deletado");
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -1,5 +1,6 @@
 package br.com.vestibular.core.usecase.candidato;
 
+import br.com.vestibular.core.exceptions.CandidatoNotFoundException;
 import br.com.vestibular.core.exceptions.CursoNotFoundExeption;
 import br.com.vestibular.core.exceptions.VestibularNotFoundException;
 import br.com.vestibular.core.gateway.CandidatoGateway;
@@ -33,6 +34,10 @@ public class DeleteCandidatoUseCase {
         final  UUID cursoUUID = UuidConverterHelper.convertToUUId(request.cursoUUID);
         if (!cursoGateway.existsCurso(cursoUUID)) {
             throw new CursoNotFoundExeption(request.cursoUUID);
+        }
+
+        if (!candidatoGateway.existsCandidato(request.candidatoId)) {
+            throw new CandidatoNotFoundException(request.candidatoId);
         }
 
         candidatoGateway.deleteCandidato(request.candidatoId);

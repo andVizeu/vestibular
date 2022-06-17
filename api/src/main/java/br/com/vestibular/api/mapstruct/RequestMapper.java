@@ -1,6 +1,7 @@
 package br.com.vestibular.api.mapstruct;
 
 import br.com.vestibular.api.entrypoint.rest.candidato.requests.CreateCandidatoDTO;
+import br.com.vestibular.api.entrypoint.rest.candidato.requests.UpdateCandidatoDTO;
 import br.com.vestibular.api.entrypoint.rest.curso.requests.CreateCursoDTO;
 import br.com.vestibular.api.entrypoint.rest.curso.requests.UpdateCursoDTO;
 import br.com.vestibular.api.entrypoint.rest.sala.requests.CreateSalaDTO;
@@ -8,6 +9,7 @@ import br.com.vestibular.api.entrypoint.rest.sala.requests.UpdateSalaDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.CreateVestibularDTO;
 import br.com.vestibular.api.entrypoint.rest.vestibular.requests.UpdateVestibularDTO;
 import br.com.vestibular.core.usecase.candidato.CreateCandidatoUseCase;
+import br.com.vestibular.core.usecase.candidato.UpdateCandidatoUseCase;
 import br.com.vestibular.core.usecase.curso.CreateCursoUseCase;
 import br.com.vestibular.core.usecase.curso.UpdateCursoUseCase;
 import br.com.vestibular.core.usecase.sala.CreateSalaUseCase;
@@ -33,4 +35,5 @@ public interface RequestMapper {
 
     CreateCandidatoUseCase.Request toRequest(CreateCandidatoDTO createCandidatoDTO, String vestibularUUID, String cursoUUID);
 
+    UpdateCandidatoUseCase.Request toRequest(String vestibularUUID, String cursoUUID, Long candidatoId, UpdateCandidatoDTO updateCandidatoDTO);
 }
