@@ -79,11 +79,12 @@ public class SalaGatewayImpl implements SalaGateway {
     public List<Sala> deleteSala(final UUID vestibularUUID, final Long salaId) {
         final Optional<VestibularEntity> vestibularOpt = vestibularRepository.findByVestibularUUID(vestibularUUID);
         if (vestibularOpt.isPresent()) {
-            final VestibularEntity vestibularEntity = vestibularOpt.get();
-            vestibularEntity.getSalas().removeIf(vestibular -> vestibular.getId().equals(salaId));
-            log.info("[CursoGatewayImpl] Deleted sala in DB: {}", salaId);
-            final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
-            return savedVestibular.getSalas().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+
+            final Optional<SalaEntity> salaOpt = salaRepository.findById(salaId);
+            salaOpt.ifPresent(salaRepository::delete);
+
+            final List<SalaEntity> savedSalas = salaRepository.findAllByVestibular(vestibularOpt.get());
+            return savedSalas.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
         }
         return null;
     }
