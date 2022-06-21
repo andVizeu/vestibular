@@ -15,9 +15,10 @@ public interface ResponseMapper {
 
     VestibularResponse toResponse(Vestibular vestibular);
 
+    CandidatoResponse toResponse(Candidato candidato);
+
     CursoResponse toResponse(Curso curso);
 
     SalaResponse toResponse(Sala sala);
 
-    CandidatoResponse toResponse(Candidato candidato);
 }

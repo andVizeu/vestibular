@@ -39,19 +39,19 @@ public class CandidatoGatewayImpl implements CandidatoGateway {
 
     @Override
     public List<Candidato> addCandidato(final UUID vestibularUUID, final UUID cursoUUID, final Candidato candidato) {
-        return vestibularRepository.findByVestibularUUID(vestibularUUID).map(
-                vestibularEntity -> {
-                    return cursoRepository.findByCursoUUID(cursoUUID).map(cursoEntity -> {
-                        final CandidatoEntity candidatoEntity = toEntityMapper.toEntity(candidato);
-                        candidatoEntity.setVestibular(vestibularEntity);
-                        candidatoEntity.setCurso(cursoEntity);
-                        vestibularEntity.getCandidatos().add(candidatoEntity);
-                        final VestibularEntity savedVestibular = vestibularRepository.save(vestibularEntity);
-                        log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedVestibular.getCandidatos().size());
-                        return savedVestibular.getCandidatos().stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
-                    }).orElse(null);
-                }
-        ).orElse(null);
+        final Optional<VestibularEntity> vestibularOpt = vestibularRepository.findByVestibularUUID(vestibularUUID);
+        final Optional<CursoEntity> cursoOpt = cursoRepository.findByCursoUUID(cursoUUID);
+
+        if (vestibularOpt.isPresent() && cursoOpt.isPresent()) {
+            final CandidatoEntity candidatoEntity = toEntityMapper.toEntity(candidato);
+            candidatoEntity.setVestibular(vestibularOpt.get());
+            candidatoEntity.setCurso(cursoOpt.get());
+            final CandidatoEntity savedCandidato = candidatoRepository.save(candidatoEntity);
+            log.info("[CandidatoGatewayImpl] Saved candidato in DB: {}", savedCandidato);
+            final List<CandidatoEntity> candidatos = candidatoRepository.findByVestibularAndCurso(vestibularOpt.get(), cursoOpt.get());
+            return candidatos.stream().map(toDomainMapper::toDomain).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Override

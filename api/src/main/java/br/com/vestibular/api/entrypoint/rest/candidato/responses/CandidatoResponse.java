@@ -1,6 +1,6 @@
 package br.com.vestibular.api.entrypoint.rest.candidato.responses;
 
-import br.com.vestibular.api.entrypoint.rest.curso.responses.CursosResponse;
+import br.com.vestibular.api.entrypoint.rest.curso.responses.CursoResponse;
 import br.com.vestibular.api.entrypoint.rest.sala.responses.SalaResponse;
 import br.com.vestibular.api.entrypoint.rest.vestibular.responses.VestibularResponse;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class CandidatoResponse {
 
     private String cpf;
 
-    private CursosResponse curso;
+    private CursoResponse curso;
 
     private SalaResponse sala;
 

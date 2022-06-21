@@ -101,14 +101,15 @@ public class CandidatoController {
     }
 
     @DeleteMapping("/{vestibularUUID}/cursos/{cursoUUID}/candidatos/{candidatoId}")
-    ResponseEntity<Void> deleteCandidato(@PathVariable final String vestibularUUID,
+    ResponseEntity<CandidatosResponse> deleteCandidato(@PathVariable final String vestibularUUID,
                                          @PathVariable final String cursoUUID,
                                          @PathVariable final Long candidatoId) {
         log.info("[CandidatoController] Recebendo delete candidato: {}", candidatoId);
         final DeleteCandidatoUseCase.Request request = new DeleteCandidatoUseCase.Request(vestibularUUID, cursoUUID, candidatoId);
-        deleteCandidato.execute(request);
-        log.info("[CandidatoController] Candidato deletado");
-        return ResponseEntity.ok().build();
+        final List<Candidato> candidatos = deleteCandidato.execute(request);
+        final List<CandidatoResponse> response = candidatos.stream().map(responseMapper::toResponse).collect(Collectors.toList());
+        log.info("[CandidatoController] Retorno delete candidatos: {}", response);
+        return ResponseEntity.ok(new CandidatosResponse(response));
     }
 
 }
